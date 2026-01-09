@@ -3,8 +3,8 @@
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="form-group">
             <label>Nome Completo</label>
-            <input type="text" formControlName="name" placeholder="Seu nome">
-            @if (registerForm.controls.name.touched && registerForm.controls.name.errors?.['required']) {
+            <input type="text" formControlName="usuTxNome" placeholder="Seu nome">
+            @if (registerForm.controls.usuTxNome.touched && registerForm.controls.usuTxNome.errors?.['required']) {
                 <div class="error-msg">
                     Nome obrigatório.
                 </div>
@@ -15,17 +15,17 @@
             <input 
                 id="email" 
                 type="email"
-                formControlName="email"
+                formControlName="usuTxEmail"
                 placeholder="seu@email.com"
                 autocomplete="off"
-                [class.error]="registerForm.controls.email.invalid && registerForm.controls.email.touched"
+                [class.error]="registerForm.controls.usuTxEmail.invalid && registerForm.controls.usuTxEmail.touched"
             >
-            @if(registerForm.controls.email.invalid && registerForm.controls.email.touched){
+            @if(registerForm.controls.usuTxEmail.invalid && registerForm.controls.usuTxEmail.touched){
                 <div class="error-msg">
-                    @if (registerForm.controls.email.hasError('required')) {
+                    @if (registerForm.controls.usuTxEmail.hasError('required')) {
                         Email é obrigatório
                     }
-                    @if (registerForm.controls.email.hasError('email')) {
+                    @if (registerForm.controls.usuTxEmail.hasError('email')) {
                         Email inválido
                     }
                 </div>
@@ -36,17 +36,17 @@
             <input
                 id="password" 
                 type="password"
-                formControlName="password"
+                formControlName="usuTxSenha"
                 autocomplete="new-password"
                 placeholder="******"
-                [class.error]="registerForm.controls.password.invalid && registerForm.controls.password.touched"
+                [class.error]="registerForm.controls.usuTxSenha.invalid && registerForm.controls.usuTxSenha.touched"
             >
-            @if(registerForm.controls.password.invalid && registerForm.controls.password.touched){
+            @if(registerForm.controls.usuTxSenha.invalid && registerForm.controls.usuTxSenha.touched){
                 <div class="error-msg">
-                    @if (registerForm.controls.password.hasError('required')) {
+                    @if (registerForm.controls.usuTxSenha.hasError('required')) {
                         Senha é obrigatório
                     }
-                    @if (registerForm.controls.password.hasError('minLength')) {
+                    @if (registerForm.controls.usuTxSenha.hasError('minLength')) {
                         Mínimo de 6 caracteres
                     }
                 </div>

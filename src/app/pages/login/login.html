@@ -1,22 +1,29 @@
 <div class="auth-container">
     <h2>Bem-vindo de volta</h2>
+
+    @if(errorMessage){
+        <div class="alert-error">
+            {{errorMessage}}
+        </div>
+    }
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
         <div class="form-group">
             <label for="email">Email</label>
             <input 
                 id="email" 
                 type="email"
-                formControlName="email"
+                formControlName="usuTxEmail"
                 placeholder="seu@email.com"
                 autocomplete="off"
-                [class.error]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+                [class.error]="loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched"
             >
-            @if(loginForm.controls.email.invalid && loginForm.controls.email.touched){
+            @if(loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched){
                 <div class="error-msg">
-                    @if (loginForm.controls.email.hasError('required')) {
+                    @if (loginForm.controls.usuTxEmail.hasError('required')) {
                         Email é obrigatório
                     }
-                    @if (loginForm.controls.email.hasError('email')) {
+                    @if (loginForm.controls.usuTxEmail.hasError('email')) {
                         Email inválido
                     }
                 </div>
@@ -27,20 +34,20 @@
             <input
                 id="password" 
                 type="password"
-                formControlName="password"
+                formControlName="usuTxSenha"
                 autocomplete="new-password"
                 placeholder="******"
-                [class.error]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+                [class.error]="loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched"
             >
             <div class="forgot-link">
                 <a routerLink="/forgot-password">Esqueceu a senha?</a>
             </div>
-            @if(loginForm.controls.password.invalid && loginForm.controls.password.touched){
+            @if(loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched){
                 <div class="error-msg">
-                    @if (loginForm.controls.password.hasError('required')) {
+                    @if (loginForm.controls.usuTxSenha.hasError('required')) {
                         Senha é obrigatório
                     }
-                    @if (loginForm.controls.password.hasError('minLength')) {
+                    @if (loginForm.controls.usuTxSenha.hasError('minLength')) {
                         Mínimo de 6 caracteres
                     }
                 </div>

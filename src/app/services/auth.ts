@@ -1,49 +1,43 @@
 import { Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { delay, of } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment.development';
+import { LoginPayload, LoginResponse, Usuario } from '../models/usuario.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUser = signal<{name: string; email: string; token?: string} | null>(null);
 
-  constructor(private router: Router) {
-    const savedUser = localStorage.getItem('user');
-    if(savedUser){
-      try{
-        this.currentUser.set(JSON.parse(savedUser));
-      }catch(e){
-        this.logout();
-      }
-    }
+  private apiUrl = environment.apiUrl;
+
+  constructor(private router: Router, private http: HttpClient) { }
+
+  login(dadosLogin: LoginPayload): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`,dadosLogin).pipe(
+      tap(resposta => {
+        if(resposta.token){
+          localStorage.setItem('token',resposta.token);
+        }
+      })
+    )
   }
 
-  login(credentials: any){
-    const user ={name: 'Kay', email: credentials.email, 
-        token: 'eyJhGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake-token-12345'};
-    console.log('Login com: ', credentials);
-    localStorage.setItem('user',JSON.stringify(user));
-    this.currentUser.set(user);
-    this.router.navigate(['/home']);
+  register(usuario: Usuario): Observable<Usuario>{
+    return this.http.post<Usuario>(`${this.apiUrl}/usuarios`,usuario);
   }
 
-  register(data: any){
-    const user = {
-        name: data.name, 
-        email: data.email,
-        token: 'eyJhGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fake-token-register'
-    };
-    console.log('Cadastro: ', data);
-    localStorage.setItem('user', JSON.stringify(user));
-    this.currentUser.set(user);
-    this.router.navigate(['/app/home']);
+  getToken(): string | null{
+    return localStorage.getItem('token');
   }
 
-  logout(){
-    localStorage.removeItem('user');
-    this.currentUser.set(null);
-    this.router.navigate(['/login'])
+  logout(): void{
+    localStorage.removeItem('token');
+  }
+
+  estaLogado(): boolean{
+    return !!this.getToken();
   }
 
   requestPasswordReset(email: string){

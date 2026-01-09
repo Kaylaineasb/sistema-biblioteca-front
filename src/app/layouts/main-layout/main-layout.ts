@@ -12,7 +12,7 @@ import { AuthService } from '../../services/auth';
       <header class="app-header">
         <div class="logo">Meu Sistema</div>
         <div class="user-info">
-          <span>Olá, {{ authService.currentUser()?.name }}</span>
+          <span>Olá</span>
           <button (click)="logout()" class="btn-logout">Sair</button>
         </div>
       </header>
