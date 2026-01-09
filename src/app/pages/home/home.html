@@ -1,0 +1,8 @@
+<div class="auth-container" style="text-align: center;">
+      <h1>Bem-vindo, {{ authService.currentUser()?.name }}!</h1>
+      <p>Você está numa área segura.</p>
+      
+      <button (click)="logout()" style="background-color: #dc2626; margin-top: 20px;">
+        Sair do Sistema
+      </button>
+    </div>

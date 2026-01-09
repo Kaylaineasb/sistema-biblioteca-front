@@ -1,0 +1,52 @@
+<div class="auth-container">
+    <h2>Bem-vindo de volta</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+                id="email" 
+                type="email"
+                formControlName="email"
+                placeholder="seu@email.com"
+                autocomplete="off"
+                [class.error]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+            >
+            @if(loginForm.controls.email.invalid && loginForm.controls.email.touched){
+                <div class="error-msg">
+                    @if (loginForm.controls.email.hasError('required')) {
+                        Email é obrigatório
+                    }
+                    @if (loginForm.controls.email.hasError('email')) {
+                        Email inválido
+                    }
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input
+                id="password" 
+                type="password"
+                formControlName="password"
+                autocomplete="new-password"
+                placeholder="******"
+                [class.error]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+            >
+            <div class="forgot-link">
+                <a routerLink="/forgot-password">Esqueceu a senha?</a>
+            </div>
+            @if(loginForm.controls.password.invalid && loginForm.controls.password.touched){
+                <div class="error-msg">
+                    @if (loginForm.controls.password.hasError('required')) {
+                        Senha é obrigatório
+                    }
+                    @if (loginForm.controls.password.hasError('minLength')) {
+                        Mínimo de 6 caracteres
+                    }
+                </div>
+            }
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+    </form>
+    <p>Não tem uma conta? <a routerLink="/register">Cadastre-se</a></p>
+</div>

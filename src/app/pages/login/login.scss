@@ -1,0 +1,11 @@
+.forgot-link {
+    text-align: right;
+    margin-top: 0.25rem;
+    
+    a {
+        font-size: 0.85rem;
+        color: #2563eb;
+        text-decoration: none;
+        &:hover { text-decoration: underline; }
+    }
+}

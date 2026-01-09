@@ -1,0 +1,67 @@
+<div class="auth-container">
+    <h2>Crie sua conta</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
+        <div class="form-group">
+            <label>Nome Completo</label>
+            <input type="text" formControlName="name" placeholder="Seu nome">
+            @if (registerForm.controls.name.touched && registerForm.controls.name.errors?.['required']) {
+                <div class="error-msg">
+                    Nome obrigatório.
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input 
+                id="email" 
+                type="email"
+                formControlName="email"
+                placeholder="seu@email.com"
+                autocomplete="off"
+                [class.error]="registerForm.controls.email.invalid && registerForm.controls.email.touched"
+            >
+            @if(registerForm.controls.email.invalid && registerForm.controls.email.touched){
+                <div class="error-msg">
+                    @if (registerForm.controls.email.hasError('required')) {
+                        Email é obrigatório
+                    }
+                    @if (registerForm.controls.email.hasError('email')) {
+                        Email inválido
+                    }
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input
+                id="password" 
+                type="password"
+                formControlName="password"
+                autocomplete="new-password"
+                placeholder="******"
+                [class.error]="registerForm.controls.password.invalid && registerForm.controls.password.touched"
+            >
+            @if(registerForm.controls.password.invalid && registerForm.controls.password.touched){
+                <div class="error-msg">
+                    @if (registerForm.controls.password.hasError('required')) {
+                        Senha é obrigatório
+                    }
+                    @if (registerForm.controls.password.hasError('minLength')) {
+                        Mínimo de 6 caracteres
+                    }
+                </div>
+            }
+        </div>
+        <div class="form-group">
+            <label>Confirmar Senha</label>
+            <input type="password" formControlName="confirmPassword" placeholder="Repita a senha">
+            @if (registerForm.controls.confirmPassword.touched && registerForm.controls.confirmPassword.hasError('passwordMismatch')) {
+                <div class="error-msg">
+                    As senhas não coincidem.
+                </div>
+            }
+        </div>
+        <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+    </form>
+    <p>Já tem uma conta? <a routerLink="/login">Faça Login</a></p>
+</div>
