@@ -6,6 +6,9 @@ import { HomeComponent } from './pages/home/home';
 import { authGuard } from './guards/auth-guard';
 import { AuthLayoutComponent } from './layouts/auth.layout/auth-layout';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout';
+import { LivroCadastroComponent } from './pages/livro-cadastro/livro-cadastro';
+import { ClienteList } from './pages/cliente-list/cliente-list';
+import { adminGuard } from './guards/admin-guard';
 
 export const routes: Routes = [
     {
@@ -24,6 +27,10 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       { path: 'home', component: HomeComponent },
+      { path: 'livros/novo', component: LivroCadastroComponent},
+      { path: 'livros/editar/:id', component: LivroCadastroComponent},
+      { path: 'clientes/editar/:id', component: RegisterComponent},
+      { path: 'clientes', component: ClienteList, canActivate: [adminGuard]},
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

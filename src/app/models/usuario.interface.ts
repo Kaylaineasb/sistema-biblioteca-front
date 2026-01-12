@@ -8,8 +8,8 @@ export interface Usuario {
 }
 
 export enum Perfil{
-    ADMIN,
-    CLIENTE
+    ADMIN = 'ADMIN',
+    CLIENTE = 'CLIENTE'
 }
 
 export interface LoginPayload {

@@ -1,8 +1,59 @@
-<div class="auth-container" style="text-align: center;">
-      <h1>Bem-vindo</h1>
-      <p>Você está numa área segura.</p>
-      
-      <button (click)="logout()" style="background-color: #dc2626; margin-top: 20px;">
-        Sair do Sistema
-      </button>
+<div class="home-container">
+  <header class="page-header">
+    <div class="header-content">
+      <h1>Acervo Disponível</h1>
+      <p>Gerencie os livros da biblioteca</p>
     </div>
+    <a routerLink="/app/livros/novo" class="btn-primary">
+      + Adicionar Livro
+    </a>
+  </header>
+  <main class="books-grid">
+    @if(livros.length > 0){
+      @for (livro of livros; track livro.livNrId) {
+        <div class="book-card">
+          <div class="book-cover">
+            <span class="book-spine"></span>
+            <div class="cover-content">
+              <span class="icon">📚</span>
+            </div>
+          </div>
+
+          <div class="book-info">
+            <h3 class="book-title" title="{{livro.livTxTitulo}}">{{livro.livTxTitulo}}</h3>
+            <p class="book-author">
+              por <strong>{{livro.livTxAutor}}</strong>
+            </p>
+          </div>
+
+          @if (isAdmin) {
+            <div class="admin-actions">
+               <a [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-edit">
+                 ✏️ Editar
+               </a>
+               
+               <button (click)="deletarLivro(livro.livNrId!)" class="btn-delete">
+                 🗑️ Excluir
+               </button>
+            </div>
+          }
+
+          <div class="book-meta">
+            <span class="isbn-badge">ISBN: {{livro.livTxIsbn}}</span>
+            @if (livro.livDtPublicacao){
+              <span class="year-badge">
+                {{ livro.livDtPublicacao | date:'yyyy' }}
+              </span>
+            }
+          </div>
+        </div>
+      }
+    } @else {
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <h3>Nenhum livro encontrado</h3>
+        <p>Comece adicionando o primeiro livro ao acervo.</p>
+      </div>
+    }
+  </main>
+</div>

@@ -32,6 +32,35 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getNomeUsuario(): string {
+    const token = this.getToken();
+    if (token) {
+      const payloadBase64 = token.split('.')[1];
+      
+      try {
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.nome || 'Usuário';
+      } catch (e) {
+        return 'Usuário';
+      }
+    }
+    return '';
+  }
+
+  isAdmin(): boolean {
+    const token = this.getToken();
+    if(token){
+      const payloadBase64 = token.split('.')[1];
+      try{
+        const payload = JSON.parse(atob(payloadBase64));
+        return payload.perfil === 'ADMIN';
+      }catch (e){
+        return false;
+      }
+    }
+    return false;
+  }
+
   logout(): void{
     localStorage.removeItem('token');
   }
