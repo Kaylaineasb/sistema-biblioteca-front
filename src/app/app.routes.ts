@@ -9,6 +9,7 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout';
 import { LivroCadastroComponent } from './pages/livro-cadastro/livro-cadastro';
 import { ClienteList } from './pages/cliente-list/cliente-list';
 import { adminGuard } from './guards/admin-guard';
+import { EmprestimoList } from './pages/emprestimo-list/emprestimo-list';
 
 export const routes: Routes = [
     {
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: 'livros/editar/:id', component: LivroCadastroComponent},
       { path: 'clientes/editar/:id', component: RegisterComponent},
       { path: 'clientes', component: ClienteList, canActivate: [adminGuard]},
+      { path: 'emprestimos', component: EmprestimoList, canActivate: [adminGuard]},
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },

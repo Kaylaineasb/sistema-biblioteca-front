@@ -1,0 +1,42 @@
+<div class="page-container">
+  <div class="header-flex">
+      <h2>Controle de Empréstimos</h2>
+      <a routerLink="/app/emprestimos/novo" class="btn-primary">+ Novo Empréstimo</a>
+  </div>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Livro</th>
+          <th>Usuário</th>
+          <th>Data Empréstimo</th>
+          <th>Devolução Prevista</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (emp of emprestimos; track emp.empNrId) {
+          <tr>
+            <td>#{{ emp.empNrId }}</td>
+            <td><strong>{{ emp.livNr.livTxTitulo }}</strong></td>
+            <td>{{ emp.usuNr.usuTxNome }}</td>
+            
+            <td>{{ emp.empDtEmprestimo | date:'dd/MM/yyyy' }}</td>
+            
+            <td>{{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}</td>
+            
+            <td>
+              <span class="status-badge" [class]="emp.empTxStatus">
+                {{ emp.empTxStatus }}
+              </span>
+            </td>
+          </tr>
+        } @empty {
+            <tr><td colspan="6" class="text-center">Nenhum empréstimo ativo.</td></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -25,6 +25,9 @@ import { AuthService } from '../../services/auth';
                  Dashboard
               </li>
               @if(isAdmin){
+                <li routerLink="/app/emprestimos" routerLinkActive="active">Emprestimos</li>
+              }
+              @if(isAdmin){
                 <li routerLink="/app/clientes" routerLinkActive="active">Clientes</li>
               }
               <li>Configurações</li>

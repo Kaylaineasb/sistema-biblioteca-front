@@ -1,0 +1,12 @@
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    
+    &.ATIVO { background: #e3f2fd; color: #0d47a1; }
+    &.DEVOLVIDO { background: #e8f5e9; color: #1b5e20; }
+    &.ATRASADO { background: #ffebee; color: #b71c1c; }
+}
+.header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
+.btn-primary { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;}
