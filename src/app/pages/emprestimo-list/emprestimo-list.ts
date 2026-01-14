@@ -28,4 +28,16 @@ export class EmprestimoList implements OnInit{
       error: (erro) => console.error(erro)
     });
   }
+
+  realizarDevolucao(id:number){
+    if(confirm('Confirmar devolução deste livro?')){
+      this.emprestimoService.devolver(id).subscribe({
+        next: () =>{
+          alert('Livro devolvido com sucesso!');
+          this.carregarEmprestimos();
+        },
+        error: () => alert("Erro ao registrar devolução.")
+      });
+    }
+  }
 }

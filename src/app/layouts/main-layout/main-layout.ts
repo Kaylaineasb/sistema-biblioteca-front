@@ -21,16 +21,12 @@ import { AuthService } from '../../services/auth';
         <aside class="sidebar">
           <nav>
             <ul>
-              <li routerLink="/app/home" routerLinkActive="active">
-                 Dashboard
-              </li>
-              @if(isAdmin){
-                <li routerLink="/app/emprestimos" routerLinkActive="active">Emprestimos</li>
+              <li><a routerLink="/app/home" routerLinkActive="active">Acervo</a></li>
+              @if (isAdmin) {
+                <li><a routerLink="/app/emprestimos">Gestão de Empréstimos</a></li>
+                <li><a routerLink="/app/clientes">Gestão de Usuários</a></li>
               }
-              @if(isAdmin){
-                <li routerLink="/app/clientes" routerLinkActive="active">Clientes</li>
-              }
-              <li>Configurações</li>
+              <li><a routerLink="/app/meus-emprestimos">Meus Empréstimos</a></li>
             </ul>
           </nav>
         </aside>

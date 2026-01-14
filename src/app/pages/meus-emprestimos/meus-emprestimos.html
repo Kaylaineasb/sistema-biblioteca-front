@@ -1,0 +1,37 @@
+<div class="page-container">
+  <h2>Minha Estante (Empréstimos)</h2>
+
+  <div class="cards-grid">
+    @for (emp of meusEmprestimos; track emp.empNrId) {
+      <div class="loan-card" [class.devolvido]="emp.empTxStatus === 'DEVOLVIDO'">
+        
+        <div class="card-header">
+          <h3>{{ emp.livNr.livTxTitulo }}</h3>
+          <span class="status-badge" [class]="emp.empTxStatus">
+            {{ emp.empTxStatus }}
+          </span>
+        </div>
+
+        <div class="card-body">
+          <p><strong>Autor:</strong> {{ emp.livNr.livTxAutor }}</p>
+          <hr>
+          <div class="dates">
+            <p>
+              <small>Retirado em:</small><br>
+              {{ emp.empDtEmprestimo | date:'dd/MM/yyyy' }}
+            </p>
+            <p>
+              <small>Devolução prevista:</small><br>
+              <strong>{{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}</strong>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>Você não possui livros emprestados no momento.</p>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.page-container { padding: 2rem; max-width: 1000px; margin: 0 auto; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.loan-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  border-left: 5px solid #007bff;
+
+  &.devolvido {
+    border-left-color: #28a745;
+    opacity: 0.8;
+  }
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 1rem;
+  
+  h3 { margin: 0; font-size: 1.1rem; color: #333; }
+}
+
+.status-badge {
+  font-size: 0.75rem; padding: 4px 8px; border-radius: 4px; font-weight: bold;
+  &.ATIVO { background: #e3f2fd; color: #0d47a1; }
+  &.DEVOLVIDO { background: #e8f5e9; color: #1b5e20; }
+  &.ATRASADO { background: #ffebee; color: #b71c1c; }
+}
+
+.dates {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  color: #555;
+}

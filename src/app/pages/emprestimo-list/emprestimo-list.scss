@@ -1,12 +1,163 @@
-.status-badge {
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    
-    &.ATIVO { background: #e3f2fd; color: #0d47a1; }
-    &.DEVOLVIDO { background: #e8f5e9; color: #1b5e20; }
-    &.ATRASADO { background: #ffebee; color: #b71c1c; }
+// Variáveis de Cores
+$primary: #007bff;
+$success: #28a745;
+$bg-light: #f8f9fa;
+$border-color: #e9ecef;
+$text-dark: #343a40;
+$text-muted: #6c757d;
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.header-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;}
-.btn-primary { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;}
+
+// --- Cabeçalho com Flexbox ---
+.header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-size: 1.75rem;
+    color: $text-dark;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.btn-primary {
+  background-color: $primary;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2);
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: darken($primary, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+// --- Wrapper da Tabela (O Card Branco) ---
+.table-wrapper {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  border: 1px solid $border-color;
+  
+  overflow-x: auto; 
+}
+
+// --- Estilização da Tabela ---
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+thead {
+  background-color: $bg-light;
+  
+  th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: $text-muted;
+    font-weight: 700;
+    border-bottom: 2px solid $border-color;
+  }
+}
+
+tbody {
+  tr {
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: rgba($primary, 0.03);
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-color;
+    }
+  }
+
+  td {
+    padding: 1.2rem 1.5rem;
+    color: $text-dark;
+    vertical-align: middle;
+    font-size: 0.95rem;
+
+    &:first-child {
+      color: $text-muted;
+      font-weight: bold;
+      width: 60px;
+    }
+
+    strong {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+}
+
+// --- Badges de Status ---
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &.ATIVO { 
+    background-color: #e3f2fd; 
+    color: #0d47a1; 
+  }
+  &.DEVOLVIDO { 
+    background-color: #e8f5e9; 
+    color: #1b5e20; 
+  }
+  &.ATRASADO { 
+    background-color: #ffebee; 
+    color: #c62828; 
+  }
+}
+
+// --- Botão de Devolver ---
+.btn-devolver {
+  background-color: white;
+  color: $success;
+  border: 1px solid $success;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: $success;
+    color: white;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+  }
+}
+
+.text-center {
+  text-align: center;
+  padding: 3rem;
+  color: $text-muted;
+  font-style: italic;
+}

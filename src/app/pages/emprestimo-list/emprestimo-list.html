@@ -14,6 +14,7 @@
           <th>Data Empréstimo</th>
           <th>Devolução Prevista</th>
           <th>Status</th>
+          <th>Ações</th>
         </tr>
       </thead>
       <tbody>
@@ -31,6 +32,13 @@
               <span class="status-badge" [class]="emp.empTxStatus">
                 {{ emp.empTxStatus }}
               </span>
+            </td>
+            <td>
+              @if (emp.empTxStatus === 'ATIVO') {
+                <button (click)="realizarDevolucao(emp.empNrId!)" class="btn-devolver">
+                  🔄 Devolver
+                </button>
+              }
             </td>
           </tr>
         } @empty {

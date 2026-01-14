@@ -18,4 +18,12 @@ export class EmprestimoService {
     cadastrar(dto: EmprestimoDTO): Observable<Emprestimo>{
       return this.http.post<Emprestimo>(this.apiUrl, dto);
     }
+
+    devolver(id: number): Observable<void>{
+      return this.http.put<void>(`${this.apiUrl}/${id}/devolucao`,{});
+    }
+
+    listarMeusEmprestimos(): Observable<Emprestimo[]>{
+      return this.http.get<Emprestimo[]>(`${this.apiUrl}/meus-emprestimos`);
+    }
 }
