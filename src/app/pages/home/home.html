@@ -8,9 +8,16 @@
       + Adicionar Livro
     </a>
   </header>
+  <div class="search-bar">
+    <input 
+      type="text"
+      placeholder="Pesquisar por título, autor ou ISBN..."
+      (input)="filtrarLivros($event)">
+      <span class="search-icon">🔍</span>
+  </div>
   <main class="books-grid">
     @if(livros.length > 0){
-      @for (livro of livros; track livro.livNrId) {
+      @for (livro of livrosFiltrados; track livro.livNrId) {
         <div class="book-card">
           <div class="book-cover">
             <span class="book-spine"></span>

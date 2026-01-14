@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit{
   isAdmin = false;
 
   livros: Livro[] = [];
+  livrosFiltrados: Livro[] = [];
   
   ngOnInit(){
       this.isAdmin = this.authService.isAdmin();
@@ -30,6 +31,7 @@ export class HomeComponent implements OnInit{
     this.livroService.listar().subscribe({
       next: (dados) => {
         this.livros = dados;
+        this.livrosFiltrados = dados;
         console.log('Livros carregados com sucesso: ', dados);
       },
       error : (err) => {
@@ -48,5 +50,20 @@ export class HomeComponent implements OnInit{
         error: () => alert("Erro ao remover livro.") 
       });
     }
+  }
+
+  filtrarLivros(event: Event){
+    const texto = (event.target as HTMLInputElement).value.toLocaleLowerCase();
+
+    if(!texto){
+      this.livrosFiltrados = this.livros;
+      return;
+    }
+
+    this.livrosFiltrados = this.livros.filter(livro => 
+      livro.livTxTitulo.toLocaleLowerCase().includes(texto) ||
+      livro.livTxAutor.toLocaleLowerCase().includes(texto) ||
+      livro.livTxIsbn.includes(texto)
+    )
   }
 }
