@@ -1,1 +1,36 @@
-<p>emprestimo-cadastro works!</p>
+<div class="container">
+  <h2>Novo Empréstimo</h2>
+  
+  <form [formGroup]="formEmprestimo" (ngSubmit)="onSubmit()">
+    
+    <div class="form-group">
+      <label for="usuario">Cliente / Leitor</label>
+      <select id="usuario" formControlName="usuario">
+        <option [ngValue]="null" disabled>Selecione um cliente...</option>
+        @for (user of usuarios; track user.usuNrId) {
+          <option [value]="user.usuNrId">
+            {{ user.usuTxNome }} ({{ user.usuTxEmail }})
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="livro">Livro para Empréstimo</label>
+      <select id="livro" formControlName="livro">
+        <option [ngValue]="null" disabled>Selecione um livro...</option>
+        @for (livro of livros; track livro.livNrId) {
+          <option [value]="livro.livNrId">
+            {{ livro.livTxTitulo }} - ISBN: {{ livro.livTxIsbn }}
+          </option>
+        }
+      </select>
+    </div>
+
+    <div class="actions">
+      <button type="submit" [disabled]="formEmprestimo.invalid">Confirmar Empréstimo</button>
+      <a routerLink="/app/emprestimos" class="btn-cancelar">Cancelar</a>
+    </div>
+
+  </form>
+</div>

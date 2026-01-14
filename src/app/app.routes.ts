@@ -10,6 +10,7 @@ import { LivroCadastroComponent } from './pages/livro-cadastro/livro-cadastro';
 import { ClienteList } from './pages/cliente-list/cliente-list';
 import { adminGuard } from './guards/admin-guard';
 import { EmprestimoList } from './pages/emprestimo-list/emprestimo-list';
+import { EmprestimoCadastroComponent } from './pages/emprestimo-cadastro/emprestimo-cadastro';
 
 export const routes: Routes = [
     {
@@ -33,6 +34,7 @@ export const routes: Routes = [
       { path: 'clientes/editar/:id', component: RegisterComponent},
       { path: 'clientes', component: ClienteList, canActivate: [adminGuard]},
       { path: 'emprestimos', component: EmprestimoList, canActivate: [adminGuard]},
+      { path: 'emprestimos/novo', component: EmprestimoCadastroComponent, canActivate:[adminGuard]},
       { path: '', redirectTo: 'home', pathMatch: 'full' }
     ]
   },
