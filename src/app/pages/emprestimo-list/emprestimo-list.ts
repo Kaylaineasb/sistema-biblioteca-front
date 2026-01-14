@@ -40,4 +40,15 @@ export class EmprestimoList implements OnInit{
       });
     }
   }
+
+  estaAtrasado(emprestimo: Emprestimo){
+    if(emprestimo.empTxStatus !== 'ATIVO') return false;
+
+    const dataPrevista = new Date(emprestimo.empDtDevolucaoPrevista);
+    const hoje = new Date();
+
+    hoje.setHours(0,0,0,0);
+
+    return dataPrevista < hoje;
+  }
 }

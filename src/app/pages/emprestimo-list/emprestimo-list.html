@@ -29,8 +29,13 @@
             <td>{{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}</td>
             
             <td>
-              <span class="status-badge" [class]="emp.empTxStatus">
-                {{ emp.empTxStatus }}
+              <span 
+                class="status-badge" 
+                [class.ATRASADO]="estaAtrasado(emp)"
+                [class.ATIVO]="!estaAtrasado(emp) && emp.empTxStatus === 'ATIVO'"
+                [class.DEVOLVIDO]="emp.empTxStatus === 'DEVOLVIDO'"
+              >
+                {{ estaAtrasado(emp) ? 'ATRASADO' : emp.empTxStatus }}
               </span>
             </td>
             <td>
