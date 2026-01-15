@@ -18,11 +18,15 @@
     <div class="form-group">
       <label for="livro">Livro para Empréstimo</label>
       <select id="livro" formControlName="livro">
-        <option [ngValue]="null" disabled>Selecione um livro...</option>
+        @if(livros.length === 0){
+          <option [ngValue]="null" disabled selected>Nenhum livro disponível no momento</option>
+        } @else{
+           <option [ngValue]="null" disabled>Selecione um livro...</option>
         @for (livro of livros; track livro.livNrId) {
           <option [value]="livro.livNrId">
             {{ livro.livTxTitulo }} - ISBN: {{ livro.livTxIsbn }}
           </option>
+        }
         }
       </select>
     </div>

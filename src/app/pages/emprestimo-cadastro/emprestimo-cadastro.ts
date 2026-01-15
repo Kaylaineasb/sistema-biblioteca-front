@@ -37,7 +37,9 @@ export class EmprestimoCadastroComponent implements OnInit {
 
   carregarDados(){
     this.livroService.listar().subscribe({
-      next: (dado) => this.livros = dado,
+      next: (dado) => {
+        this.livros = dado.filter(livro => livro.disponivel ===  true);
+      },
       error: (e) => console.error("Erro ao buscar livros ", e)
     });
 
