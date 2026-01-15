@@ -26,4 +26,8 @@ export class EmprestimoService {
     listarMeusEmprestimos(): Observable<Emprestimo[]>{
       return this.http.get<Emprestimo[]>(`${this.apiUrl}/meus-emprestimos`);
     }
+
+    renovar(id: number):Observable<void>{
+      return this.http.put<void>(`${this.apiUrl}/${id}/renovacao`,{});
+    }
 }

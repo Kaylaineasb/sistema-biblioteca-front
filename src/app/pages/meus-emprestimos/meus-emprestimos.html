@@ -25,6 +25,12 @@
               <strong>{{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}</strong>
             </p>
           </div>
+          <hr>
+          @if(emp.empTxStatus === 'ATIVO'){
+            <button class="btn-renovar" (click)="renovarLivro(emp.empNrId!)">
+              🔄 Renovar (+7 dias)
+            </button>
+          }
         </div>
 
       </div>

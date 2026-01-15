@@ -20,4 +20,18 @@ export class MeusEmprestimosComponent implements OnInit{
       error: (erro) => console.error("Erro ao buscar meus empréstimos ", erro)
     });
   }
+
+  renovarLivro(id: number){
+    if(confirm("Deseja renovar este livro por mais 7 dias?")){
+      this.emprestimoService.renovar(id).subscribe({
+        next: () => {
+          alert('Renovação realizada com sucesso!');
+          this.ngOnInit();
+        },
+        error: (err) => {
+          alert("Erro: " + (err || "Não foi possível renovar!"));
+        }
+      });
+    }
+  }
 }
