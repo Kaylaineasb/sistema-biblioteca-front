@@ -8,6 +8,43 @@
       + Adicionar Livro
     </a>
   </header>
+  @if (dashboardData) {
+    <div class="dashboard-grid">
+      
+      <div class="kpi-card blue">
+        <div class="kpi-icon">📚</div>
+        <div class="kpi-info">
+          <h3>{{ dashboardData.totalLivros }}</h3>
+          <p>Livros no Acervo</p>
+        </div>
+      </div>
+
+      <div class="kpi-card green">
+        <div class="kpi-icon">👥</div>
+        <div class="kpi-info">
+          <h3>{{ dashboardData.totalLeitores }}</h3>
+          <p>Leitores Cadastrados</p>
+        </div>
+      </div>
+
+      <div class="kpi-card orange">
+        <div class="kpi-icon">🔄</div>
+        <div class="kpi-info">
+          <h3>{{ dashboardData.emprestimosAtivos }}</h3>
+          <p>Empréstimos Ativos</p>
+        </div>
+      </div>
+
+      <div class="kpi-card red">
+        <div class="kpi-icon">🚨</div>
+        <div class="kpi-info">
+          <h3>{{ dashboardData.emprestimosAtrasados }}</h3>
+          <p>Em Atraso</p>
+        </div>
+      </div>
+
+    </div>
+  }
   <div class="search-bar">
     <input 
       type="text"

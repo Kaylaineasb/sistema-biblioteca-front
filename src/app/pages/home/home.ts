@@ -5,6 +5,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router, RouterLink } from '@angular/router';
 import { LivroService } from '../../services/livro.service';
 import { Livro } from '../../models/livro.interface';
+import { DashboardDTO } from '../../models/dashboardDTO';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-home',
@@ -14,17 +16,24 @@ import { Livro } from '../../models/livro.interface';
 })
 export class HomeComponent implements OnInit{
   protected authService = inject(AuthService);
-  private http = inject(HttpClient);
-  private router = inject(Router);
   private livroService = inject(LivroService);
+  private dashboardService = inject(DashboardService);
   isAdmin = false;
 
   livros: Livro[] = [];
   livrosFiltrados: Livro[] = [];
+
+  dashboardData: DashboardDTO | null = null;
   
   ngOnInit(){
       this.isAdmin = this.authService.isAdmin();
       this.carregarLivros();
+      if (this.authService.isAdmin()) {
+      this.dashboardService.getDashboard().subscribe({
+        next: (dados) => this.dashboardData = dados,
+        error: (e) => console.error('Erro dashboard', e)
+      });
+    }
   }
 
   carregarLivros(){
