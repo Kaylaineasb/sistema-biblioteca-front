@@ -27,6 +27,13 @@
           </div>
 
           <div class="book-info">
+            <div class="availability-badge"
+              [class.available]="livro.disponivel"
+              [class.unavailable]="!livro.disponivel"
+            >
+              <span class="dot"></span>
+              {{livro.disponivel ? 'Disponível' : 'Indisponível'}}
+            </div>
             <h3 class="book-title" title="{{livro.livTxTitulo}}">{{livro.livTxTitulo}}</h3>
             <p class="book-author">
               por <strong>{{livro.livTxAutor}}</strong>

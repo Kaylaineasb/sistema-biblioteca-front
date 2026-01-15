@@ -4,4 +4,5 @@ export interface Livro {
   livTxAutor: string;
   livTxIsbn: string;
   livDtPublicacao?: string;
+  disponivel?: boolean;
 }

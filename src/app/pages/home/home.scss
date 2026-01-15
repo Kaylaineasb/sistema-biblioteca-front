@@ -208,3 +208,42 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
     pointer-events: none;
   }
 }
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  align-self: flex-start;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  &.available {
+    background-color: #e6f4ea;
+    color: #1e7e34;
+    .dot { background-color: #28a745; }
+  }
+
+  &.unavailable {
+    background-color: #fdecea;
+    color: #c62828;
+    .dot { background-color: #dc3545; }
+  }
+}
+
+.book-card:has(.unavailable) {
+  opacity: 0.8;
+  background-color: #fcfcfc;
+  a
+  .book-cover {
+    filter: grayscale(80%); 
+  }
+}
