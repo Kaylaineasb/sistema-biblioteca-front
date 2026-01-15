@@ -1,59 +1,63 @@
-# AuthBase
+# 📚 Biblioteca Web App (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.9.
+Aplicação Web desenvolvida em **Angular** para consumo da API de Biblioteca. Possui interface responsiva, painéis distintos para Administradores e Clientes, e feedback visual em tempo real.
 
-## Development server
+## 🚀 Tecnologias Utilizadas
 
-To start a local development server, run:
+- **Angular 16+**
+- **TypeScript**
+- **SCSS** (Estilização modular)
+- **RxJS** (Programação Reativa)
+- **Guards & Interceptors** (Proteção de rotas e injeção de Token)
+
+## 🖥️ Funcionalidades e Telas
+
+### 👤 Área Pública
+- **Login:** Autenticação segura.
+- **Cadastro:** Registro de novos leitores.
+
+### 🛡️ Painel do Administrador
+- **Dashboard:** Cards com indicadores (KPIs) de atrasos e totais.
+- **Gestão de Acervo:** Cadastro e exclusão de livros.
+- **Controle de Empréstimos:** Tabela com status colorido (**ATIVO**, **DEVOLVIDO**, **ATRASADO**) e botão para realizar devolução.
+- **Gestão de Usuários:** Listagem de clientes.
+
+### 📖 Painel do Leitor (Cliente)
+- **Home com Busca:** Pesquisa instantânea por Título, Autor ou ISBN.
+- **Indicadores de Disponibilidade:** Etiquetas visuais ("🟢 Disponível" / "🔴 Indisponível") nos cards dos livros.
+- **Minha Estante:** Visualização dos livros emprestados.
+- **Renovação Online:** Botão para renovar o livro por +7 dias (se elegível).
+
+## 🎨 Destaques de UX/UI
+- **Feedback Visual:** Cores diferentes para status de empréstimo.
+- **Filtros Inteligentes:** O formulário de empréstimo oculta automaticamente livros indisponíveis.
+- **Tratamento de Erros:** Alertas amigáveis ao usuário (ex: "Limite de renovações atingido").
+
+## 🛠️ Como Executar
+
+1. Certifique-se de ter o **Node.js** e **Angular CLI** instalados.
+2. Clone o repositório e instale as dependências:
 
 ```bash
+npm install
+```
+
+Inicie o servidor de desenvolvimento:
+
+```bash
+
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Acesse http://localhost:4200 no navegador.
 
-## Code scaffolding
+Nota: É necessário que o Backend esteja rodando na porta 8080.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+📂 Estrutura de Pastas
+src/app/pages: Componentes de página (Home, Login, Listagens).
 
-```bash
-ng generate component component-name
-```
+src/app/services: Comunicação HTTP com o Backend.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+src/app/guards: Proteção de rotas (AdminGuard, AuthGuard).
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+src/app/models: Interfaces TypeScript (Tipagem forte).
