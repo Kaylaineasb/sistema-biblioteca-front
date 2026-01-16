@@ -63,9 +63,16 @@
                 }
             </div>
         }
-        <button type="submit" [disabled]="registerForm.invalid">
-            {{ idEdicao ? 'Salvar Alterações' : 'Cadastrar' }}
-        </button>
+        <div class="form-actions">
+            @if(idEdicao){
+                <button type="button" class="btn-cancel" (click)="cancelar()">
+                    Cancelar
+                </button>
+            }
+            <button type="submit" [disabled]="registerForm.invalid">
+                {{ idEdicao ? 'Salvar Alterações' : 'Cadastrar' }}
+            </button>
+        </div>
     </form>
     @if (!idEdicao) {
         <p>Já tem conta? <a routerLink="/login">Faça Login</a></p>

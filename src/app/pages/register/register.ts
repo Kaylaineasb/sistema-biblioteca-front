@@ -86,4 +86,8 @@ export class RegisterComponent implements OnInit{
       this.registerForm.markAllAsTouched();
     }
   }
+
+  cancelar(){
+    this.router.navigate(['/app/clientes']);
+  }
 }
