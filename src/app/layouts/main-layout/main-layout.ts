@@ -10,23 +10,53 @@ import { AuthService } from '../../services/auth';
   template: `
     <div class="app-container">
       <header class="app-header">
-        <div class="logo">Meu Sistema</div>
-        <div class="user-info">
-          <span>Olá, {{nomeUsuario}}</span>
-          <button (click)="logout()" class="btn-logout">Sair</button>
+        <div class="brand">
+          <i class="ph ph-book-open-text logo-icon"></i>
+          <span class="logo-text">Biblio<span class="highlight">Tech</span></span>
+        </div>
+       <div class="user-info">
+          <div class="user-avatar">
+            {{ nomeUsuario.charAt(0).toUpperCase() }}
+          </div>
+          <span class="user-name">{{nomeUsuario}}</span>
+          <button (click)="logout()" class="btn-logout" title="Sair">
+            <i class="ph ph-sign-out"></i>
+          </button>
         </div>
       </header>
 
       <div class="content-wrapper">
         <aside class="sidebar">
           <nav>
-            <ul>
-              <li><a routerLink="/app/home" routerLinkActive="active">Acervo</a></li>
+            <ul class="nav-list">
+              <li>
+                <a routerLink="/app/home" routerLinkActive="active" class="nav-link">
+                  <i class="ph ph-books"></i>
+                  <span>Acervo de Livros</span>
+                </a>
+              </li>
               @if (isAdmin) {
-                <li><a routerLink="/app/emprestimos">Gestão de Empréstimos</a></li>
-                <li><a routerLink="/app/clientes">Gestão de Usuários</a></li>
+                <li class="section-title">Administração</li>
+                <li>
+                  <a routerLink="/app/emprestimos" routerLinkActive="active" class="nav-link">
+                    <i class="ph ph-arrows-left-right"></i>
+                    <span>Empréstimos</span>
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/app/clientes" routerLinkActive="active" class="nav-link">
+                    <i class="ph ph-users"></i>
+                    <span>Usuários</span>
+                  </a>
+                </li>
               }
-              <li><a routerLink="/app/meus-emprestimos">Meus Empréstimos</a></li>
+              <li class="section-title">Minha Área</li>
+              <li>
+                <a routerLink="/app/meus-emprestimos" routerLinkActive="active" class="nav-link">
+                  <i class="ph ph-bookmark-simple"></i>
+                  <span>Meus Empréstimos</span>
+                </a>
+              </li>
             </ul>
           </nav>
         </aside>

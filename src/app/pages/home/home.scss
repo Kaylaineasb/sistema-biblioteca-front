@@ -138,24 +138,9 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
 
 .admin-actions {
   display: flex;
+  justify-content: center;
+  gap: 16px;
   border-top: 1px solid #eee;
-  
-  .btn-edit, .btn-delete {
-    flex: 1;
-    padding: 10px;
-    text-align: center;
-    border: none;
-    cursor: pointer;
-    font-size: 0.9rem;
-    text-decoration: none; // para o link 'a'
-    transition: background 0.2s;
-  }
-
-  .btn-edit { background: #fff3cd; color: #856404; }
-  .btn-edit:hover { background: #ffeeba; }
-
-  .btn-delete { background: #f8d7da; color: #721c24; }
-  .btn-delete:hover { background: #f5c6cb; }
 }
 
 // --- Empty State ---
@@ -287,4 +272,67 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
   &.green { border-left-color: #28a745; .kpi-icon { color: #28a745; background: #e8f5e9; } }
   &.orange { border-left-color: #ffc107; .kpi-icon { color: #ffc107; background: #fff3cd; } }
   &.red { border-left-color: #dc3545; .kpi-icon { color: #dc3545; background: #f8d7da; } }
+}
+
+// Container para alinhar os botões
+.card-actions {
+  display: flex;
+  gap: 20px; // Espaço entre os botões
+  margin-top: 1.5rem; // Afasta do conteúdo de cima
+  padding-top: 1rem;
+  border-top: 1px solid #eee; // Uma linha sutil separando
+}
+
+// Estilo Base do Botão (Comum aos dois)
+.btn-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; // Espaço entre ícone e texto
+  
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 8px; // Cantos arredondados
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  // Ícone
+  .material-symbols-rounded {
+    font-size: 1.1rem; // Tamanho do ícone
+    font-variation-settings: 'FILL' 1; // Ícone preenchido
+  }
+
+  // --- Botão EDITAR (Estilo Indigo/Azul Suave) ---
+  &.edit {
+    background-color: #eef2ff; // Fundo muito clarinho
+    color: #4f46e5;            // Texto Azul Índigo forte
+
+    &:hover {
+      background-color: #4f46e5; // Fica sólido no hover
+      color: white;
+      transform: translateY(-2px); // Leve subidinha
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2); // Sombra azul
+    }
+  }
+
+  // --- Botão EXCLUIR (Estilo Vermelho Suave) ---
+  &.delete {
+    background-color: #fef2f2; // Fundo muito clarinho
+    color: #ef4444;            // Texto Vermelho forte
+
+    &:hover {
+      background-color: #ef4444; // Fica sólido no hover
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2); // Sombra vermelha
+    }
+  }
+
+  // Efeito de clique (afunda um pouquinho)
+  &:active {
+    transform: translateY(0);
+  }
 }

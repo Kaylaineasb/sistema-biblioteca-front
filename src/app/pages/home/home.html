@@ -79,13 +79,15 @@
 
           @if (isAdmin) {
             <div class="admin-actions">
-               <a [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-edit">
-                 ✏️ Editar
-               </a>
+              <button [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-action edit">
+                <i class="ph ph-pencil-simple-line"></i>
+                Editar
+              </button>
                
-               <button (click)="deletarLivro(livro.livNrId!)" class="btn-delete">
-                 🗑️ Excluir
-               </button>
+              <button (click)="deletarLivro(livro.livNrId!)" class="btn-action delete">
+                <i class="ph ph-trash"></i>
+                Excluir
+              </button>
             </div>
           }
 

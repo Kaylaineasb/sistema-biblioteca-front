@@ -22,11 +22,11 @@
                             <span class="badge" [class.admin]="cliente.usuTxPerfil === Perfil.ADMIN">{{cliente.usuTxPerfil}}</span>
                         </td>
                         <td class="actions-cell">
-                            <a [routerLink]="['/app/clientes/editar', cliente.usuNrId]" class="btn-icon edit">
-                                ✏️
-                            </a>
+                            <button [routerLink]="['/app/clientes/editar', cliente.usuNrId]" class="btn-icon edit">
+                                <i class="ph ph-pencil-simple-line"></i>
+                            </button>
                             <button (click)="deletarCliente(cliente.usuNrId!)" class="btn-icon delete">
-                                🗑️
+                                <i class="ph ph-trash"></i>
                             </button>
                         </td>
                     </tr>

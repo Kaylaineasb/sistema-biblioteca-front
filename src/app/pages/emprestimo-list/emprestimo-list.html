@@ -41,7 +41,8 @@
             <td>
               @if (emp.empTxStatus === 'ATIVO') {
                 <button (click)="realizarDevolucao(emp.empNrId!)" class="btn-devolver">
-                  🔄 Devolver
+                  <i class="ph ph-arrow-counter-clockwise"></i>
+                  Devolver
                 </button>
               }
             </td>

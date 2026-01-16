@@ -9,32 +9,48 @@
 }
 
 .toast-card {
-  min-width: 250px;
-  max-width: 350px;
-  background: white;
-  padding: 12px 16px;
+  min-width: 280px;
+  max-width: 400px;
+  padding: 16px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  animation: slideIn 0.3s ease-out;
-  border-left: 5px solid #ccc;
-  
-  // Tipos
-  &.success { border-left-color: #28a745; .icon { color: #28a745; } }
-  &.error { border-left-color: #dc3545; .icon { color: #dc3545; } }
-  &.info { border-left-color: #17a2b8; .icon { color: #17a2b8; } }
+  animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
 
-  .message {
-    font-size: 0.9rem;
-    color: #333;
-    font-weight: 500;
+  // --- CORES ---
+
+  &.success, &.sucess {
+    background-color: #d1e7dd; 
+    color: #0f5132;            
+    border-color: #badbcc;     
+  }
+
+  &.error {
+    background-color: #f8d7da;
+    color: #842029;          
+    border-color: #f5c2c7;
+  }
+
+  &.info, &.warning, &.alert {
+    background-color: #fff3cd;
+    color: #664d03;          
+    border-color: #ffecb5;
   }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from { 
+    transform: translateX(100%); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateX(0); 
+    opacity: 1; 
+  }
 }

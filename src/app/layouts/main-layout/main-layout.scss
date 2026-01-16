@@ -1,51 +1,156 @@
+// Variáveis de Cor (para manter consistência)
+$primary-color: #4f46e5;
+$primary-light: #eef2ff;
+$text-dark: #1f2937;
+$text-gray: #6b7280;
+$border-color: #e5e7eb;
+$header-height: 70px;
+$sidebar-width: 260px;
+
 .app-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #f3f4f6;
 }
 
+// --- HEADER ---
 .app-header {
-  height: 60px;
-  background-color: #1e293b;
-  color: white;
+  height: $header-height;
+  background-color: white;
+  border-bottom: 1px solid $border-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 
-  .btn-logout {
-    margin-left: 10px;
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    cursor: pointer;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-dark;
+
+    .logo-icon { color: $primary-color; font-size: 2rem; }
+    .highlight { color: $primary-color; }
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .user-avatar {
+      width: 36px; height: 36px;
+      background: $primary-light;
+      color: $primary-color;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: bold;
+    }
+
+    .user-name {
+      font-weight: 500;
+      color: $text-dark;
+    }
+
+    .btn-logout {
+      background: none; border: none; cursor: pointer;
+      color: $text-gray;
+      font-size: 1.2rem;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #ffeeef;
+        color: #dc3545;
+      }
+    }
   }
 }
 
+// --- LAYOUT DO CORPO ---
 .content-wrapper {
   display: flex;
   flex: 1;
+  overflow: hidden;
 }
 
+// --- SIDEBAR ---
 .sidebar {
-  width: 250px;
-  background-color: #fff;
-  border-right: 1px solid #e5e7eb;
-  padding: 20px;
-  
-  li { 
-    list-style: none; 
-    margin-bottom: 10px; 
-    cursor: pointer; 
-    color: #4b5563; 
+  width: $sidebar-width;
+  background-color: white;
+  border-right: 1px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1rem;
+  overflow-y: auto;
+
+  .nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .section-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #9ca3af;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin: 1.5rem 0 0.5rem 12px;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: $text-gray;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    margin-bottom: 4px;
+
+    i {
+      font-size: 1.25rem;
+    }
+
+    &:hover {
+      background-color: #f9fafb;
+      color: $primary-color;
+    }
+
+    &.active {
+      background-color: $primary-light;
+      color: $primary-color;
+      font-weight: 600;
+
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        left: -1rem;
+        top: 50%; transform: translateY(-50%);
+        height: 20px;
+        width: 4px;
+        background-color: $primary-color;
+        border-radius: 0 4px 4px 0;
+      }
+    }
   }
 }
 
 .main-content {
   flex: 1;
-  padding: 20px;
-  background-color: #f9fafb;
+  padding: 2rem;
   overflow-y: auto;
+  background-color: #f8f9fa;
 }
