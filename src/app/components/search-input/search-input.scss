@@ -1,0 +1,49 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  background-color: white;
+  padding: 12px 20px;
+  border-radius: 50px;
+  
+  border: 1px solid transparent;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  transition: all 0.3s ease;
+  
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+
+  .search-icon {
+    font-size: 1.3rem;
+    color: #9ca3af;
+    transition: color 0.3s;
+  }
+
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: #333;
+    font-weight: 500;
+
+    &::placeholder {
+      color: #9ca3af;
+    }
+  }
+
+  // --- EFEITO DE FOCO ---
+  &:focus-within {
+    border-color: #e0e7ff;
+    box-shadow: 0 0 0 4px #eef2ff;
+    transform: translateY(-1px);
+    
+    .search-icon {
+      color: #4f46e5;
+    }
+  }
+}

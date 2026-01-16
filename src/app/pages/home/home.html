@@ -12,7 +12,9 @@
     <div class="dashboard-grid">
       
       <div class="kpi-card blue">
-        <div class="kpi-icon">📚</div>
+        <div class="icon-wrapper">
+          <i class="ph ph-books"></i>
+        </div>
         <div class="kpi-info">
           <h3>{{ dashboardData.totalLivros }}</h3>
           <p>Livros no Acervo</p>
@@ -20,7 +22,9 @@
       </div>
 
       <div class="kpi-card green">
-        <div class="kpi-icon">👥</div>
+        <div class="icon-wrapper">
+          <i class="ph ph-users"></i>
+        </div>
         <div class="kpi-info">
           <h3>{{ dashboardData.totalLeitores }}</h3>
           <p>Leitores Cadastrados</p>
@@ -28,7 +32,9 @@
       </div>
 
       <div class="kpi-card orange">
-        <div class="kpi-icon">🔄</div>
+        <div class="icon-wrapper">
+          <i class="ph ph-arrows-left-right"></i>
+        </div>
         <div class="kpi-info">
           <h3>{{ dashboardData.emprestimosAtivos }}</h3>
           <p>Empréstimos Ativos</p>
@@ -36,7 +42,9 @@
       </div>
 
       <div class="kpi-card red">
-        <div class="kpi-icon">🚨</div>
+        <div class="icon-wrapper">
+          <i class="ph ph-warning-circle"></i>
+        </div>
         <div class="kpi-info">
           <h3>{{ dashboardData.emprestimosAtrasados }}</h3>
           <p>Em Atraso</p>
@@ -45,12 +53,10 @@
 
     </div>
   }
-  <div class="search-bar">
-    <input 
-      type="text"
+  <div style="margin-bottom: 3rem;">
+    <app-search-input 
       placeholder="Pesquisar por título, autor ou ISBN..."
-      (input)="filtrarLivros($event)">
-      <span class="search-icon">🔍</span>
+      (search)="filtrarLivros($event)"></app-search-input>
   </div>
   <main class="books-grid">
     @if(livros.length > 0){

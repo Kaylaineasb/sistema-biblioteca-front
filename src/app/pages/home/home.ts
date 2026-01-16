@@ -9,10 +9,11 @@ import { DashboardDTO } from '../../models/dashboardDTO';
 import { DashboardService } from '../../services/dashboard.service';
 import { CustomAlertService } from '../../services/custom-alert.service';
 import { ToastService } from '../../services/toast.service';
+import { SearchInput } from '../../components/search-input/search-input';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, SearchInput],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
@@ -64,6 +65,7 @@ export class HomeComponent implements OnInit{
       this.livroService.deletar(id).subscribe({
         next: () => {
           this.livros = this.livros.filter(l => l.livNrId !== id);
+          this.livrosFiltrados = this.livrosFiltrados.filter(l => l.livNrId !== id);
           this.toastService.sucess("Livro removido!");
         },
         error: () => this.toastService.error("Erro ao remover livro.") 
@@ -71,18 +73,18 @@ export class HomeComponent implements OnInit{
     }
   }
 
-  filtrarLivros(event: Event){
-    const texto = (event.target as HTMLInputElement).value.toLocaleLowerCase();
-
+  filtrarLivros(texto: string){
     if(!texto){
       this.livrosFiltrados = this.livros;
       return;
     }
 
+    const termo = texto.toLowerCase().trim();
+
     this.livrosFiltrados = this.livros.filter(livro => 
-      livro.livTxTitulo.toLocaleLowerCase().includes(texto) ||
-      livro.livTxAutor.toLocaleLowerCase().includes(texto) ||
-      livro.livTxIsbn.includes(texto)
+      livro.livTxTitulo.toLowerCase().includes(termo) ||
+      livro.livTxAutor.toLowerCase().includes(termo) ||
+      livro.livTxIsbn.includes(termo)
     )
   }
 }
