@@ -54,6 +54,7 @@ Acesse http://localhost:4200 no navegador.
 Nota: É necessário que o Backend esteja rodando na porta 8080.
 
 📂 Estrutura de Pastas
+
 src/app/pages: Componentes de página (Home, Login, Listagens).
 
 src/app/services: Comunicação HTTP com o Backend.

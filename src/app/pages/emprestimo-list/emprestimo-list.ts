@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 @Component({
   selector: 'app-emprestimo-list',
@@ -12,6 +13,7 @@ import { Emprestimo } from '../../models/emprestimo.interface';
 })
 export class EmprestimoList implements OnInit{
   private emprestimoService = inject(EmprestimoService);
+  private alertService = inject(CustomAlertService);
 
   emprestimos: Emprestimo[] = [];
 
@@ -29,14 +31,21 @@ export class EmprestimoList implements OnInit{
     });
   }
 
-  realizarDevolucao(id:number){
-    if(confirm('Confirmar devolução deste livro?')){
+  async realizarDevolucao(id:number){
+    const confimou = await this.alertService.confirm(
+      'Devolução',
+      'Confirmar Devolução?',
+      'warning'
+    )
+    if(confimou){
       this.emprestimoService.devolver(id).subscribe({
-        next: () =>{
-          alert('Livro devolvido com sucesso!');
+        next: async () =>{
+          await this.alertService.confirm('Sucesso','Livro Devolvido com sucesso!','sucess');
           this.carregarEmprestimos();
         },
-        error: () => alert("Erro ao registrar devolução.")
+        error: async () => {
+          await this.alertService.confirm('Erro','Erro ao registrar devolução.','danger');
+        }
       });
     }
   }

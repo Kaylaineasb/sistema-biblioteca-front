@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UsuarioService } from '../../services/usuario.service';
 import { Perfil, Usuario } from '../../models/usuario.interface';
 import { RouterLink } from '@angular/router';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -12,6 +13,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ClienteList implements OnInit{
   private usuarioService = inject(UsuarioService);
+  private alertService = inject(CustomAlertService);
   protected readonly Perfil = Perfil;
 
   clientes: Usuario[] = [];
@@ -31,14 +33,21 @@ export class ClienteList implements OnInit{
     })
   }
 
-  deletarCliente(id: number){
-    if(confirm('Tem certeza que deseja remover esse usuário?')){
+  async deletarCliente(id: number){
+    const confirmou = await this.alertService.confirm(
+      "Excluir usuário",
+      "Tem certeza que deseja remover este usuário permanentemente?",
+      "danger"
+    )
+    if(confirmou){
       this.usuarioService.deletar(id).subscribe({
-        next: () => {
+        next: async () => {
           this.clientes = this.clientes.filter(c=> c.usuNrId !==id);
-          alert('Usuário removido!');
+          await this.alertService.confirm("Removido","usuário removido com sucesso!","sucess");
         },
-        error: () => alert('Erro ao remover o usuário.')
+        error: async () => {
+          await this.alertService.confirm("Erro","Erro ao remover o usuário.","danger");
+        }
       });
     }
   }

@@ -7,6 +7,7 @@ import { LivroService } from '../../services/livro.service';
 import { Livro } from '../../models/livro.interface';
 import { DashboardDTO } from '../../models/dashboardDTO';
 import { DashboardService } from '../../services/dashboard.service';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit{
   protected authService = inject(AuthService);
   private livroService = inject(LivroService);
   private dashboardService = inject(DashboardService);
+  private alertService = inject(CustomAlertService);
   isAdmin = false;
 
   livros: Livro[] = [];
@@ -49,8 +51,13 @@ export class HomeComponent implements OnInit{
     })
   }
 
-  deletarLivro(id:number){
-    if(confirm('Tem certeza que deseja remover esse livro?')){
+  async deletarLivro(id:number){
+    const confirmou = await this.alertService.confirm(
+      'Excluir Livro', 
+      'Tem certeza que deseja remover este livro permanentemente?',
+      'danger' 
+    );
+    if(confirmou){
       this.livroService.deletar(id).subscribe({
         next: () => {
           this.livros = this.livros.filter(l => l.livNrId !== id);

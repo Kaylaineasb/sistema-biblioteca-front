@@ -1,0 +1,26 @@
+@if (isVisible && options) {
+  <div class="overlay">
+    <div class="alert-box fade-in">
+      
+      <div class="icon-area" [ngClass]="options.type">
+        @if (options.type === 'danger') { <span>✖</span> }
+        @else if (options.type === 'warning') { <span>!</span> }
+        @else { <span>✔</span> }
+      </div>
+
+      <h3>{{ options.title }}</h3>
+      <p>{{ options.message }}</p>
+
+      <div class="actions">
+        <button class="btn-cancel" (click)="onCancel()">
+          {{ options.cancelText }}
+        </button>
+        
+        <button class="btn-confirm" [ngClass]="options.type" (click)="onConfirm()">
+          {{ options.confirmText }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

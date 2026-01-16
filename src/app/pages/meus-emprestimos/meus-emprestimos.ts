@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
+import { CustomAlertService } from '../../services/custom-alert.service';
 
 @Component({
   selector: 'app-meus-emprestimos',
@@ -11,6 +12,7 @@ import { Emprestimo } from '../../models/emprestimo.interface';
 })
 export class MeusEmprestimosComponent implements OnInit{
   private emprestimoService = inject(EmprestimoService);
+  private alertService = inject(CustomAlertService);
 
   meusEmprestimos: Emprestimo[] = [];
 
@@ -21,15 +23,21 @@ export class MeusEmprestimosComponent implements OnInit{
     });
   }
 
-  renovarLivro(id: number){
-    if(confirm("Deseja renovar este livro por mais 7 dias?")){
+  async renovarLivro(id: number){
+    const confirmou = await this.alertService.confirm(
+      'Renovação',
+      'Deseja renovar este livro por mais 7 dias?',
+      'warning'
+    )
+    if(confirmou){
       this.emprestimoService.renovar(id).subscribe({
-        next: () => {
-          alert('Renovação realizada com sucesso!');
+        next: async() => {
+          await this.alertService.confirm('Sucesso!', 'Renovação realizada com sucesso!','sucess');
           this.ngOnInit();
         },
-        error: (err) => {
-          alert("Erro: " + (err || "Não foi possível renovar!"));
+        error: async (err) => {
+          const msg = err || "Não foi possível renovar!";
+          await this.alertService.confirm('Erro',msg,'danger');
         }
       });
     }
