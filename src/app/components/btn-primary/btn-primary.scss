@@ -1,0 +1,50 @@
+$primary-start: #4f46e5; // Indigo 600
+$primary-end: #6366f1;   // Indigo 500
+
+.btn-modern {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 12px 24px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-decoration: none;
+  
+  background: linear-gradient(135deg, $primary-start 0%, $primary-end 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  
+  box-shadow: 0 10px 20px -10px rgba(79, 70, 229, 0.5);
+  
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+
+  i {
+    font-size: 1.25rem;
+  }
+
+  &:hover:not(.disabled):not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.6);
+    filter: brightness(1.1);
+  }
+
+  &:active:not(.disabled):not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 5px 10px -5px rgba(79, 70, 229, 0.4);
+  }
+
+  &.disabled, &:disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+  }
+}

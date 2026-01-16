@@ -10,10 +10,11 @@ import { Livro } from '../../models/livro.interface';
 import { Usuario } from '../../models/usuario.interface';
 import { EmprestimoDTO } from '../../models/emprestimo.interface';
 import { ToastService } from '../../services/toast.service';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-emprestimo-cadastro',
-  imports: [ CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [ CommonModule, ReactiveFormsModule, RouterLink, BtnPrimary ],
   templateUrl: './emprestimo-cadastro.html',
   styleUrl: './emprestimo-cadastro.scss',
 })

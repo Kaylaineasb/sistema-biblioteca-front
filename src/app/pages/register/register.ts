@@ -6,10 +6,11 @@ import { AuthService } from '../../services/auth';
 import { passwordMatchValidator } from '../../utils/passwordMatchValidator';
 import { Usuario } from '../../models/usuario.interface';
 import { UsuarioService } from '../../services/usuario.service';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-register',
-  imports: [ CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [ CommonModule, ReactiveFormsModule, RouterLink, BtnPrimary],
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })

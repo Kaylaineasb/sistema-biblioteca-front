@@ -4,11 +4,12 @@ import { AuthService } from '../../services/auth';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { LoginPayload } from '../../models/usuario.interface';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [ CommonModule, ReactiveFormsModule, RouterLink,BtnPrimary],
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })

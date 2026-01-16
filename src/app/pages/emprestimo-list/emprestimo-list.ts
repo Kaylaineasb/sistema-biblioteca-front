@@ -5,10 +5,11 @@ import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
 import { CustomAlertService } from '../../services/custom-alert.service';
 import { ToastService } from '../../services/toast.service';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-emprestimo-list',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink,BtnPrimary],
   templateUrl: './emprestimo-list.html',
   styleUrl: './emprestimo-list.scss',
 })

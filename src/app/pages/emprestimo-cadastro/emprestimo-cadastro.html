@@ -1,39 +1,67 @@
 <div class="container">
-  <h2>Novo Empréstimo</h2>
+  
+  <div class="form-header">
+    <div class="icon-area">
+      <i class="ph ph-handshake"></i> </div>
+    <div class="header-text">
+      <h2>Novo Empréstimo</h2>
+      <p>Registre a saída de um livro para um leitor.</p>
+    </div>
+  </div>
   
   <form [formGroup]="formEmprestimo" (ngSubmit)="onSubmit()">
     
     <div class="form-group">
       <label for="usuario">Cliente / Leitor</label>
-      <select id="usuario" formControlName="usuario">
-        <option [ngValue]="null" disabled>Selecione um cliente...</option>
-        @for (user of usuarios; track user.usuNrId) {
-          <option [value]="user.usuNrId">
-            {{ user.usuTxNome }} ({{ user.usuTxEmail }})
-          </option>
-        }
-      </select>
+      <div class="input-wrapper select-wrapper">
+        <i class="ph ph-user field-icon"></i>
+        
+        <select id="usuario" formControlName="usuario">
+          <option [ngValue]="null" disabled>Selecione um cliente...</option>
+          @for (user of usuarios; track user.usuNrId) {
+            <option [value]="user.usuNrId">
+              {{ user.usuTxNome }}
+            </option>
+          }
+        </select>
+
+        <i class="ph ph-caret-down arrow-icon"></i>
+      </div>
     </div>
 
     <div class="form-group">
       <label for="livro">Livro para Empréstimo</label>
-      <select id="livro" formControlName="livro">
-        @if(livros.length === 0){
-          <option [ngValue]="null" disabled selected>Nenhum livro disponível no momento</option>
-        } @else{
-           <option [ngValue]="null" disabled>Selecione um livro...</option>
-        @for (livro of livros; track livro.livNrId) {
-          <option [value]="livro.livNrId">
-            {{ livro.livTxTitulo }} - ISBN: {{ livro.livTxIsbn }}
-          </option>
-        }
-        }
-      </select>
+      <div class="input-wrapper select-wrapper">
+        <i class="ph ph-book-open field-icon"></i>
+        
+        <select id="livro" formControlName="livro">
+          @if(livros.length === 0){
+            <option [ngValue]="null" disabled selected>Nenhum livro disponível</option>
+          } @else{
+            <option [ngValue]="null" disabled>Selecione um livro...</option>
+            @for (livro of livros; track livro.livNrId) {
+              <option [value]="livro.livNrId">
+                {{ livro.livTxTitulo }} (ISBN: {{ livro.livTxIsbn }})
+              </option>
+            }
+          }
+        </select>
+
+        <i class="ph ph-caret-down arrow-icon"></i>
+      </div>
     </div>
 
     <div class="actions">
-      <button type="submit" [disabled]="formEmprestimo.invalid">Confirmar Empréstimo</button>
-      <a routerLink="/app/emprestimos" class="btn-cancelar">Cancelar</a>
+      <a routerLink="/app/emprestimos" class="btn-cancelar">
+        Cancelar
+      </a>
+
+      <app-btn-primary 
+        label="Confirmar Empréstimo" 
+        icon="check" 
+        type="submit"
+        [disabled]="formEmprestimo.invalid">
+      </app-btn-primary>
     </div>
 
   </form>

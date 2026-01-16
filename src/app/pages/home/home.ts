@@ -10,10 +10,11 @@ import { DashboardService } from '../../services/dashboard.service';
 import { CustomAlertService } from '../../services/custom-alert.service';
 import { ToastService } from '../../services/toast.service';
 import { SearchInput } from '../../components/search-input/search-input';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, RouterLink, SearchInput],
+  imports: [CommonModule, RouterLink, SearchInput, BtnPrimary],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

@@ -4,10 +4,11 @@ import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
 import { CustomAlertService } from '../../services/custom-alert.service';
 import { ToastService } from '../../services/toast.service';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-meus-emprestimos',
-  imports: [CommonModule],
+  imports: [CommonModule, BtnPrimary],
   templateUrl: './meus-emprestimos.html',
   styleUrl: './meus-emprestimos.scss',
 })

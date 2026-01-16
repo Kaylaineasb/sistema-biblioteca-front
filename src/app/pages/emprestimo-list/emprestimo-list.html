@@ -1,7 +1,11 @@
 <div class="page-container">
   <div class="header-flex">
       <h2>Controle de Empréstimos</h2>
-      <a routerLink="/app/emprestimos/novo" class="btn-primary">+ Novo Empréstimo</a>
+      <app-btn-primary 
+        label="Novo Empréstimo" 
+        icon="plus" 
+        route="/app/emprestimos/novo">
+      </app-btn-primary>
   </div>
 
   <div class="table-wrapper">

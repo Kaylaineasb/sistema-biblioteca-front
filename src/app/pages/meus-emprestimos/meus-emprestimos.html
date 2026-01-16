@@ -6,10 +6,23 @@
       <div class="loan-card" [class.devolvido]="emp.empTxStatus === 'DEVOLVIDO'">
         
         <div class="card-header">
-          <h3>{{ emp.livNr.livTxTitulo }}</h3>
-          <span class="status-badge" [class]="emp.empTxStatus">
-            {{ emp.empTxStatus }}
+          <div class="left-content">
+            <div class="book-icon-wrapper" [ngClass]="emp.empTxStatus">
+              <i class="ph ph-book-open"></i>
+            </div>
+            
+            <div class="header-info">
+              <h3>{{ emp.livNr.livTxTitulo }}</h3>
+              <p class="author">{{ emp.livNr.livTxAutor }}</p>
+            </div>
+          </div>
+
+          <span class="status-badge" [ngClass]="emp.empTxStatus">
+            @if(emp.empTxStatus === 'ATIVO') { Ativo }
+            @else if(emp.empTxStatus === 'DEVOLVIDO') { Devolvido }
+            @else { Atrasado }
           </span>
+
         </div>
 
         <div class="card-body">
@@ -27,9 +40,13 @@
           </div>
           <hr>
           @if(emp.empTxStatus === 'ATIVO'){
-            <button class="btn-renovar" (click)="renovarLivro(emp.empNrId!)">
-              🔄 Renovar (+7 dias)
-            </button>
+            <div class="action-area">
+              <app-btn-primary 
+                label="Renovar (+7 dias)" 
+                icon="clock-clockwise" 
+                (onClick)="renovarLivro(emp.empNrId!)">
+              </app-btn-primary>
+            </div>
           }
         </div>
 

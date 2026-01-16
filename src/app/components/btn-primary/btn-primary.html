@@ -1,0 +1,13 @@
+@if (route) {
+  <a [routerLink]="route" class="btn-modern" [class.disabled]="disabled">
+    @if(icon){ <i class="ph" [class]="'ph-'+icon"></i> }
+    {{ label }}
+  </a>
+} 
+
+@else {
+  <button [type]="type" class="btn-modern" [disabled]="disabled" (click)="handleClick()">
+    @if(icon){ <i class="ph" [class]="'ph-'+icon"></i> }
+    {{ label }}
+  </button>
+}

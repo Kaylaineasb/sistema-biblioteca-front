@@ -4,9 +4,11 @@
       <h1>Acervo Disponível</h1>
       <p>Gerencie os livros da biblioteca</p>
     </div>
-    <a routerLink="/app/livros/novo" class="btn-primary">
-      + Adicionar Livro
-    </a>
+    <app-btn-primary 
+      label="Adicionar Livro" 
+      icon="plus" 
+      route="/app/livros/novo">
+    </app-btn-primary>
   </header>
   @if (dashboardData) {
     <div class="dashboard-grid">
@@ -61,57 +63,61 @@
   <main class="books-grid">
     @if(livros.length > 0){
       @for (livro of livrosFiltrados; track livro.livNrId) {
-        <div class="book-card">
+        <div class="book-card" [class.unavailable]="!livro.disponivel">
+          
           <div class="book-cover">
-            <span class="book-spine"></span>
-            <div class="cover-content">
-              <span class="icon">📚</span>
+            <div class="status-pill" [class.available]="livro.disponivel">
+              @if(livro.disponivel) {
+                <i class="ph ph-check-circle"></i> Disponível
+              } @else {
+                <i class="ph ph-lock-key"></i> Indisponível
+              }
+            </div>
+
+            <div class="cover-art">
+              <i class="ph ph-book-open-text"></i>
             </div>
           </div>
 
-          <div class="book-info">
-            <div class="availability-badge"
-              [class.available]="livro.disponivel"
-              [class.unavailable]="!livro.disponivel"
-            >
-              <span class="dot"></span>
-              {{livro.disponivel ? 'Disponível' : 'Indisponível'}}
+          <div class="book-content">
+            <div class="info">
+              <h3 class="book-title" title="{{livro.livTxTitulo}}">{{livro.livTxTitulo}}</h3>
+              <p class="book-author">
+                <span class="label">Autor:</span> {{livro.livTxAutor}}
+              </p>
             </div>
-            <h3 class="book-title" title="{{livro.livTxTitulo}}">{{livro.livTxTitulo}}</h3>
-            <p class="book-author">
-              por <strong>{{livro.livTxAutor}}</strong>
-            </p>
-          </div>
 
-          @if (isAdmin) {
-            <div class="admin-actions">
-              <button [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-action edit">
-                <i class="ph ph-pencil-simple-line"></i>
-                Editar
-              </button>
-               
-              <button (click)="deletarLivro(livro.livNrId!)" class="btn-action delete">
-                <i class="ph ph-trash"></i>
-                Excluir
-              </button>
+            <div class="book-meta">
+              <div class="meta-item">
+                <i class="ph ph-barcode"></i> {{livro.livTxIsbn}}
+              </div>
+              @if (livro.livDtPublicacao){
+                <div class="meta-item">
+                  <i class="ph ph-calendar-blank"></i> {{ livro.livDtPublicacao | date:'yyyy' }}
+                </div>
+              }
             </div>
-          }
 
-          <div class="book-meta">
-            <span class="isbn-badge">ISBN: {{livro.livTxIsbn}}</span>
-            @if (livro.livDtPublicacao){
-              <span class="year-badge">
-                {{ livro.livDtPublicacao | date:'yyyy' }}
-              </span>
+            @if (isAdmin) {
+              <div class="admin-actions">
+                <button [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-action edit" title="Editar">
+                  <i class="ph ph-pencil-simple"></i> Editar
+                </button>
+                
+                <button (click)="deletarLivro(livro.livNrId!)" class="btn-action delete" title="Excluir">
+                  <i class="ph ph-trash"></i> Excluir
+                </button>
+              </div>
             }
           </div>
+
         </div>
       }
     } @else {
       <div class="empty-state">
         <div class="empty-icon">📭</div>
         <h3>Nenhum livro encontrado</h3>
-        <p>Comece adicionando o primeiro livro ao acervo.</p>
+        <p>Tente buscar por outro termo ou adicione um novo livro.</p>
       </div>
     }
   </main>

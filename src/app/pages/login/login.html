@@ -1,59 +1,84 @@
-<div class="auth-container">
-    <h2>Bem-vindo de volta</h2>
+<div class="auth-wrapper">
+  
+  <div class="container">
+
+    <div class="form-header">
+      <div class="icon-area">
+        <i class="ph ph-sign-in"></i>
+      </div>
+      <div class="header-text">
+        <h2>Bem-vindo de volta!</h2>
+        <p>Acesse sua conta para continuar.</p>
+      </div>
+    </div>
 
     @if(errorMessage){
-        <div class="alert-error">
-            {{errorMessage}}
-        </div>
+      <div class="alert-box error">
+        <i class="ph ph-warning-circle"></i>
+        <span>{{errorMessage}}</span>
+      </div>
     }
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input 
-                id="email" 
-                type="email"
-                formControlName="usuTxEmail"
-                placeholder="seu@email.com"
-                autocomplete="off"
-                [class.error]="loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched"
-            >
-            @if(loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched){
-                <div class="error-msg">
-                    @if (loginForm.controls.usuTxEmail.hasError('required')) {
-                        Email é obrigatório
-                    }
-                    @if (loginForm.controls.usuTxEmail.hasError('email')) {
-                        Email inválido
-                    }
-                </div>
-            }
+      
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <div class="input-wrapper">
+          <i class="ph ph-envelope-simple"></i>
+          <input 
+            id="email" 
+            type="email" 
+            formControlName="usuTxEmail" 
+            placeholder="seu@email.com"
+            [class.error]="loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched">
         </div>
-        <div class="form-group">
-            <label for="password">Senha</label>
-            <input
-                id="password" 
-                type="password"
-                formControlName="usuTxSenha"
-                autocomplete="new-password"
-                placeholder="******"
-                [class.error]="loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched"
-            >
-            <div class="forgot-link">
-                <a routerLink="/forgot-password">Esqueceu a senha?</a>
-            </div>
-            @if(loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched){
-                <div class="error-msg">
-                    @if (loginForm.controls.usuTxSenha.hasError('required')) {
-                        Senha é obrigatório
-                    }
-                    @if (loginForm.controls.usuTxSenha.hasError('minLength')) {
-                        Mínimo de 6 caracteres
-                    }
-                </div>
-            }
+        
+        @if(loginForm.controls.usuTxEmail.invalid && loginForm.controls.usuTxEmail.touched){
+          <div class="error-msg">
+            @if (loginForm.controls.usuTxEmail.hasError('required')) { E-mail é obrigatório. }
+            @if (loginForm.controls.usuTxEmail.hasError('email')) { E-mail inválido. }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="password">Senha</label>
+          <a routerLink="/forgot-password" class="forgot-link">Esqueceu a senha?</a>
         </div>
-        <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+
+        <div class="input-wrapper">
+          <i class="ph ph-lock-key"></i>
+          <input
+            id="password" 
+            type="password" 
+            formControlName="usuTxSenha" 
+            placeholder="******"
+            [class.error]="loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched">
+        </div>
+
+        @if(loginForm.controls.usuTxSenha.invalid && loginForm.controls.usuTxSenha.touched){
+          <div class="error-msg">
+            @if (loginForm.controls.usuTxSenha.hasError('required')) { Senha é obrigatória. }
+            @if (loginForm.controls.usuTxSenha.hasError('minlength')) { Mínimo de 6 caracteres. }
+          </div>
+        }
+      </div>
+
+      <div class="actions">
+        <app-btn-primary 
+          label="Entrar no Sistema" 
+          icon="sign-in" 
+          type="submit"
+          [disabled]="loginForm.invalid">
+        </app-btn-primary>
+      </div>
+
     </form>
-    <p>Não tem uma conta? <a routerLink="/register">Cadastre-se</a></p>
+
+    <div class="footer-link">
+      <p>Ainda não tem conta? <a routerLink="/register">Cadastre-se grátis</a></p>
+    </div>
+
+  </div>
 </div>
