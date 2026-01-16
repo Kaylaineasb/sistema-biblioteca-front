@@ -4,6 +4,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Perfil, Usuario } from '../../models/usuario.interface';
 import { RouterLink } from '@angular/router';
 import { CustomAlertService } from '../../services/custom-alert.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -14,6 +15,7 @@ import { CustomAlertService } from '../../services/custom-alert.service';
 export class ClienteList implements OnInit{
   private usuarioService = inject(UsuarioService);
   private alertService = inject(CustomAlertService);
+  private toastService = inject(ToastService);
   protected readonly Perfil = Perfil;
 
   clientes: Usuario[] = [];
@@ -41,12 +43,12 @@ export class ClienteList implements OnInit{
     )
     if(confirmou){
       this.usuarioService.deletar(id).subscribe({
-        next: async () => {
+        next: () => {
           this.clientes = this.clientes.filter(c=> c.usuNrId !==id);
-          await this.alertService.confirm("Removido","usuário removido com sucesso!","sucess");
+          this.toastService.sucess("Usuário removido com sucesso!");
         },
-        error: async () => {
-          await this.alertService.confirm("Erro","Erro ao remover o usuário.","danger");
+        error: () => {
+          this.toastService.sucess("Erro ao remover o usuário.");
         }
       });
     }

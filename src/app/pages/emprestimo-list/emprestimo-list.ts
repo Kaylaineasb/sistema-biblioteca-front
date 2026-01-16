@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
 import { CustomAlertService } from '../../services/custom-alert.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-emprestimo-list',
@@ -14,6 +15,7 @@ import { CustomAlertService } from '../../services/custom-alert.service';
 export class EmprestimoList implements OnInit{
   private emprestimoService = inject(EmprestimoService);
   private alertService = inject(CustomAlertService);
+  private toastService =  inject(ToastService);
 
   emprestimos: Emprestimo[] = [];
 
@@ -39,12 +41,12 @@ export class EmprestimoList implements OnInit{
     )
     if(confimou){
       this.emprestimoService.devolver(id).subscribe({
-        next: async () =>{
-          await this.alertService.confirm('Sucesso','Livro Devolvido com sucesso!','sucess');
+        next: () =>{
+          this.toastService.sucess('Livro Devolvido com sucesso!');
           this.carregarEmprestimos();
         },
-        error: async () => {
-          await this.alertService.confirm('Erro','Erro ao registrar devolução.','danger');
+        error: () => {
+          this.toastService.error('Erro ao registrar devolução.');
         }
       });
     }

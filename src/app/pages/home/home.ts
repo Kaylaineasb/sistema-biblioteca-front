@@ -8,6 +8,7 @@ import { Livro } from '../../models/livro.interface';
 import { DashboardDTO } from '../../models/dashboardDTO';
 import { DashboardService } from '../../services/dashboard.service';
 import { CustomAlertService } from '../../services/custom-alert.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,8 @@ export class HomeComponent implements OnInit{
   private livroService = inject(LivroService);
   private dashboardService = inject(DashboardService);
   private alertService = inject(CustomAlertService);
+  private toastService = inject(ToastService);
+
   isAdmin = false;
 
   livros: Livro[] = [];
@@ -61,9 +64,9 @@ export class HomeComponent implements OnInit{
       this.livroService.deletar(id).subscribe({
         next: () => {
           this.livros = this.livros.filter(l => l.livNrId !== id);
-          alert("Livro removido!");
+          this.toastService.sucess("Livro removido!");
         },
-        error: () => alert("Erro ao remover livro.") 
+        error: () => this.toastService.error("Erro ao remover livro.") 
       });
     }
   }

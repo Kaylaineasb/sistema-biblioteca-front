@@ -4,6 +4,7 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LivroService } from '../../services/livro.service';
 import { Livro } from '../../models/livro.interface';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-livro-cadastro',
@@ -13,7 +14,10 @@ import { Livro } from '../../models/livro.interface';
 })
 export class LivroCadastroComponent implements OnInit{
   private fb = inject(NonNullableFormBuilder);
+
   private livroService = inject(LivroService);
+  private toastService = inject(ToastService);
+
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -52,20 +56,20 @@ export class LivroCadastroComponent implements OnInit{
       if (this.idEdicao) {
         this.livroService.editar(this.idEdicao, novoLivro).subscribe({
           next: () => {
-            alert('Livro atualizado!');
+            this.toastService.sucess('Livro atualizado!');
             this.router.navigate(['/app/home']);
           },
-          error: () => alert('Erro ao atualizar.')
+          error: () => this.toastService.error('Erro ao atualizar.')
         });
       } else {
         this.livroService.cadastrar(novoLivro).subscribe({
           next: () => {
-            alert('Livro cadastrado com sucesso!');
+            this.toastService.sucess('Livro cadastrado com sucesso!');
             this.router.navigate(['/app/home']);
           },
           error: (err) => {
             console.log(err);
-            alert("Erro ao cadastrar. Verifique se o ISBN já existe.");
+            this.toastService.error("Erro ao cadastrar. Verifique se o ISBN já existe.");
           }
         });
       }

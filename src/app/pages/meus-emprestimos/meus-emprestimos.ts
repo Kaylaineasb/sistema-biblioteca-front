@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { EmprestimoService } from '../../services/emprestimo.service';
 import { Emprestimo } from '../../models/emprestimo.interface';
 import { CustomAlertService } from '../../services/custom-alert.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-meus-emprestimos',
@@ -13,6 +14,7 @@ import { CustomAlertService } from '../../services/custom-alert.service';
 export class MeusEmprestimosComponent implements OnInit{
   private emprestimoService = inject(EmprestimoService);
   private alertService = inject(CustomAlertService);
+  private toastService = inject(ToastService);
 
   meusEmprestimos: Emprestimo[] = [];
 
@@ -31,13 +33,13 @@ export class MeusEmprestimosComponent implements OnInit{
     )
     if(confirmou){
       this.emprestimoService.renovar(id).subscribe({
-        next: async() => {
-          await this.alertService.confirm('Sucesso!', 'Renovação realizada com sucesso!','sucess');
+        next: () => {
+          this.toastService.sucess("Renovação realizada com sucesso!");
           this.ngOnInit();
         },
-        error: async (err) => {
+        error: (err) => {
           const msg = err || "Não foi possível renovar!";
-          await this.alertService.confirm('Erro',msg,'danger');
+          this.toastService.error(msg)
         }
       });
     }

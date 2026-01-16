@@ -9,6 +9,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Livro } from '../../models/livro.interface';
 import { Usuario } from '../../models/usuario.interface';
 import { EmprestimoDTO } from '../../models/emprestimo.interface';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-emprestimo-cadastro',
@@ -19,9 +20,11 @@ import { EmprestimoDTO } from '../../models/emprestimo.interface';
 export class EmprestimoCadastroComponent implements OnInit {
   private fb = inject(FormBuilder);
   private router = inject(Router);
+
   private emprestimoService = inject(EmprestimoService);
   private livroService = inject(LivroService);
   private usuarioService = inject(UsuarioService);
+  private toastService = inject(ToastService);
 
   livros: Livro[] = [];
   usuarios: Usuario[] = [];
@@ -58,12 +61,12 @@ export class EmprestimoCadastroComponent implements OnInit {
 
       this.emprestimoService.cadastrar(dto).subscribe({
         next: () => {
-          alert('Emprestimo registrado com sucesso!');
+          this.toastService.sucess('Emprestimo registrado com sucesso!');
           this.router.navigate(['/app/emprestimos']);
         },
         error: (err) => {
           console.error(err);
-          alert("Erro ao registrar o empréstimo. Verifique se o livro já não está emprestado.");
+          this.toastService.error("Erro ao registrar o empréstimo. Verifique se o livro já não está emprestado.");
         }
       })
     }
