@@ -12,43 +12,31 @@
   <form [formGroup]="formEmprestimo" (ngSubmit)="onSubmit()">
     
     <div class="form-group">
-      <label for="usuario">Cliente / Leitor</label>
-      <div class="input-wrapper select-wrapper">
-        <i class="ph ph-user field-icon"></i>
-        
-        <select id="usuario" formControlName="usuario">
-          <option [ngValue]="null" disabled>Selecione um cliente...</option>
-          @for (user of usuarios; track user.usuNrId) {
-            <option [value]="user.usuNrId">
-              {{ user.usuTxNome }}
-            </option>
-          }
-        </select>
-
-        <i class="ph ph-caret-down arrow-icon"></i>
-      </div>
+      <app-searchable-select
+        label="Cliente / Leitor"
+        placeholder="Pesquise o nome do cliente..."
+        icon="user"
+        [items]="usuarios"
+        bindLabel="usuTxNome"
+        bindValue="usuNrId"
+        [control]="getControl('usuario')"
+        notFoundText="Nenhum cliente encontrado!"
+      >
+      </app-searchable-select>
     </div>
 
     <div class="form-group">
-      <label for="livro">Livro para Empréstimo</label>
-      <div class="input-wrapper select-wrapper">
-        <i class="ph ph-book-open field-icon"></i>
-        
-        <select id="livro" formControlName="livro">
-          @if(livros.length === 0){
-            <option [ngValue]="null" disabled selected>Nenhum livro disponível</option>
-          } @else{
-            <option [ngValue]="null" disabled>Selecione um livro...</option>
-            @for (livro of livros; track livro.livNrId) {
-              <option [value]="livro.livNrId">
-                {{ livro.livTxTitulo }} (ISBN: {{ livro.livTxIsbn }})
-              </option>
-            }
-          }
-        </select>
-
-        <i class="ph ph-caret-down arrow-icon"></i>
-      </div>
+      <app-searchable-select
+        label="Livro para Empréstimo"
+        placeholder="Pesquise por título ou ISBN..."
+        icon="book-open"
+        [items]="livros"
+        bindLabel="livTxTitulo"
+        bindValue="livNrId"
+        [control]="getControl('livro')"
+        notFoundText="Livro não disponível ou inexistente"
+      >
+      </app-searchable-select>
     </div>
 
     <div class="actions">

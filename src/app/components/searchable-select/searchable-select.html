@@ -1,0 +1,26 @@
+<div class="form-group">
+    <label>{{ label }}</label>
+
+    <div class="input-wrapper select-wrapper"
+        [class.error]="control.invalid && control.touched"
+        [class.focused]="select.isOpen"
+    >
+        <i class="ph ph-{{icon}} field-icon"></i>
+        <ng-select
+            #select
+            class="custom-select"
+            [items]="items"
+            [bindLabel]="bindLabel"
+            [bindValue]="bindValue"
+            [placeholder]="placeholder"
+            [formControl]="control"
+            [notFoundText]="notFoundText"
+            [searchable]="true"
+            [clearable]="true"
+        >
+        </ng-select>
+    </div>
+    @if (control.invalid && control.touched) {
+        <div class="error-msg">Este campo é obrigatório.</div>
+    }
+</div>
