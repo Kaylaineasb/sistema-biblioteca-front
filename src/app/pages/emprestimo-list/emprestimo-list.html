@@ -42,11 +42,21 @@
                 {{ estaAtrasado(emp) ? 'ATRASADO' : emp.empTxStatus }}
               </span>
             </td>
-            <td>
+            <td class="actions-cell">
               @if (emp.empTxStatus === 'ATIVO') {
-                <button (click)="realizarDevolucao(emp.empNrId!)" class="btn-devolver">
-                  <i class="ph ph-arrow-counter-clockwise"></i>
-                  Devolver
+                <button 
+                  class="btn-icon primary" 
+                  title="Confirmar Devolução"
+                  (click)="realizarDevolucao(emp.empNrId!)">
+                  <i class="ph ph-check-circle"></i>
+                  <span>Devolver</span>
+                </button>
+                <button 
+                  class="btn-icon secondary" 
+                  title="Renovar prazo (+7 dias)"
+                  (click)="renovarLivro(emp.empNrId!)">
+                  <i class="ph ph-clock-clockwise"></i>
+                  <span>Renovar</span>
                 </button>
               }
             </td>

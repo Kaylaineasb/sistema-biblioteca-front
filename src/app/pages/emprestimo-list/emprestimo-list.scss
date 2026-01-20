@@ -161,3 +161,46 @@ tbody {
   color: $text-muted;
   font-style: italic;
 }
+
+.actions-cell {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espaço entre Ícone e Texto */
+  
+  padding: 8px 16px;       /* Tamanho confortável */
+  border-radius: 8px;      /* Bordas arredondadas */
+  border: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;      /* Texto levemente menor para não poluir a tabela */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.primary {
+    background-color: #ecfdf5; // Fundo verde bem claro
+    color: #059669;            // Texto verde escuro
+    
+    &:hover {
+      background-color: #d1fae5;
+      color: #047857;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.secondary {
+    background-color: #fff7ed; // Fundo laranja bem claro
+    color: #c2410c;            // Texto laranja escuro
+    
+    &:hover {
+      background-color: #ffedd5;
+      color: #9a3412;
+      transform: translateY(-1px); // Efeito leve de "subir"
+    }
+  }
+}

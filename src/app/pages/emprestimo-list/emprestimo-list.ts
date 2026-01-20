@@ -63,4 +63,24 @@ export class EmprestimoList implements OnInit{
 
     return dataPrevista < hoje;
   }
+
+  async renovarLivro(id: number){
+    const confirmou = await this.alertService.confirm(
+      'Renovação',
+      'Deseja renovar este livro por mais 7 dias?',
+      'warning'
+    )
+    if(confirmou){
+      this.emprestimoService.renovar(id).subscribe({
+        next: () => {
+          this.toastService.sucess("Renovação realizada com sucesso!");
+          this.ngOnInit();
+        },
+        error: (err) => {
+          const msg = err || "Não foi possível renovar!";
+          this.toastService.error(msg)
+        }
+      });
+    }
+  }
 }
