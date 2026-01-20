@@ -1,14 +1,23 @@
 <div class="home-container">
   <header class="page-header">
     <div class="header-content">
-      <h1>Acervo Disponível</h1>
-      <p>Gerencie os livros da biblioteca</p>
+    <h1>Acervo Disponível</h1>
+    @if (isAdmin) {
+      <p class="subtitle">Painel de gestão e controle de acervo.</p>
+    } @else {
+      <p class="subtitle">Encontre sua próxima leitura favorita em nossa coleção.</p>
+    }
+  </div>
+
+  @if (isAdmin) {
+    <div class="header-actions">
+      <app-btn-primary 
+        label="Novo Livro" 
+        icon="plus" 
+        route="/app/livros/novo">
+      </app-btn-primary>
     </div>
-    <app-btn-primary 
-      label="Adicionar Livro" 
-      icon="plus" 
-      route="/app/livros/novo">
-    </app-btn-primary>
+  }
   </header>
   @if (dashboardData) {
     <div class="dashboard-grid">

@@ -30,22 +30,6 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
   }
 }
 
-.btn-primary {
-  background-color: $primary;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 600;
-  transition: background 0.2s;
-  box-shadow: 0 4px 6px rgba(0,123,255,0.2);
-
-  &:hover {
-    background-color: darken($primary, 10%);
-    transform: translateY(-1px);
-  }
-}
-
 .books-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
@@ -364,7 +348,6 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
     font-variation-settings: 'FILL' 1;
   }
 
-  // --- Botão EDITAR ---
   &.edit {
     background-color: #eef2ff;
     color: #4f46e5;            
@@ -377,7 +360,6 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
   }
 
-  // --- Botão EXCLUIR  ---
   &.delete {
     background-color: #fef2f2;
     color: #ef4444;           
@@ -390,7 +372,6 @@ $shadow: 0 4px 15px rgba(0,0,0,0.05);
     }
   }
 
-  // Efeito de clique
   &:active {
     transform: translateY(0);
   }

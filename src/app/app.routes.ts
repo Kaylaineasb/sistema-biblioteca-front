@@ -12,6 +12,7 @@ import { adminGuard } from './guards/admin-guard';
 import { EmprestimoList } from './pages/emprestimo-list/emprestimo-list';
 import { EmprestimoCadastroComponent } from './pages/emprestimo-cadastro/emprestimo-cadastro';
 import { MeusEmprestimosComponent } from './pages/meus-emprestimos/meus-emprestimos';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password';
 
 export const routes: Routes = [
     {
@@ -21,6 +22,7 @@ export const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'register', component: RegisterComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password' , component: ResetPasswordComponent},
       { path: '', redirectTo: 'login', pathMatch: 'full' }
     ]
   },

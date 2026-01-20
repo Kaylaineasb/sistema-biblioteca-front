@@ -17,6 +17,7 @@ export class ForgotPasswordComponent {
 
   protected emailSent = false;
   protected isLoading = false;
+  errorMessage = '';
 
   protected forgotForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]]
@@ -25,15 +26,22 @@ export class ForgotPasswordComponent {
   onSubmit(){
     if(this.forgotForm.valid){
       this.isLoading = true;
-      const { email } = this.forgotForm.getRawValue();
+      this.errorMessage = '';
+    
+      const email = this.forgotForm.get('email')!.value;
 
-      this.authService.requestPasswordReset(email).subscribe({
+      this.authService.esqueciSenha(email).subscribe({
         next: () => {
           this.emailSent = true;
           this.isLoading = false;
         },
-        error: () =>{
+        error: (error) =>{
           this.isLoading = false;
+          if(error.status === 404){
+            this.errorMessage = 'Este e-mail não foi encontrado em nossa base.';
+          }else{
+            this.errorMessage = 'Erro ao enviar. Tente novamente mais tarde.';
+          }
         }
       });
     }else{

@@ -33,19 +33,25 @@ export class AuthService {
   }
 
   getNomeUsuario(): string {
-    const token = this.getToken();
-    if (token) {
-      const payloadBase64 = token.split('.')[1];
+  const token = this.getToken();
+  if (token) {
+    try {
+      const payloadBase64Url = token.split('.')[1];
+      const base64 = payloadBase64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+
+      const payload = JSON.parse(jsonPayload);
       
-      try {
-        const payload = JSON.parse(atob(payloadBase64));
-        return payload.nome || 'Usuário';
-      } catch (e) {
-        return 'Usuário';
-      }
+      return payload.nome || 'Usuário';
+    } catch (e) {
+      console.error('Erro ao decodificar token:', e);
+      return 'Usuário';
     }
-    return '';
   }
+  return '';
+}
 
   isAdmin(): boolean {
     const token = this.getToken();
@@ -69,8 +75,14 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  requestPasswordReset(email: string){
-    console.log('Solicitando reset para: ', email);
-    return of(true).pipe(delay(1500));
+  esqueciSenha(email: string): Observable<any>{
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`,{email});
+  }
+
+  redefinirSenha(token: string, senhaNova :string): Observable<any>{
+    return this.http.post(`${this.apiUrl}/auth/reset-password`,{
+      token: token,
+      newPassword: senhaNova
+    });
   }
 }
