@@ -19,19 +19,71 @@ export class EmprestimoList implements OnInit{
   private toastService =  inject(ToastService);
 
   emprestimos: Emprestimo[] = [];
+  page = 0;
+  size = 10; 
+  totalElements = 0;
+  isLoading = false;
 
   ngOnInit() {
     this.carregarEmprestimos();
   }
 
-  carregarEmprestimos(){
-    this.emprestimoService.listar().subscribe({
-      next: (dados) =>{
+  carregarEmprestimos() {
+  this.isLoading = true;
+
+  this.emprestimoService.listar(this.page, this.size).subscribe({
+    next: (dados) => {
+      // 1. OLHE NO CONSOLE DO NAVEGADOR (F12) O QUE APARECE AQUI
+      console.log("Dados vindos do Backend:", dados);
+
+      // 2. VERIFICAÇÃO DE SEGURANÇA
+      // Se vier paginado (com .content), usa o content.
+      // Se vier lista direta (backend antigo), usa os dados direto.
+      if (dados.content) {
+        this.emprestimos = dados.content;
+        this.totalElements = dados.totalElements;
+      } else if (Array.isArray(dados)) {
+        console.warn('O Backend retornou uma Lista simples, não uma Página!');
         this.emprestimos = dados;
-        console.log(dados);
-      },
-      error: (erro) => console.error(erro)
-    });
+        this.totalElements = dados.length;
+      } else {
+        this.emprestimos = [];
+      }
+
+      this.isLoading = false;
+    },
+    error: (erro) => {
+      console.error("Erro na requisição:", erro);
+      this.isLoading = false;
+      this.toastService.error('Erro ao carregar lista de empréstimos.');
+    }
+  });
+}
+
+  get totalPages(): number {
+    return Math.ceil(this.totalElements / this.size);
+  }
+
+  get isFirstPage(): boolean {
+    return this.page === 0;
+  }
+
+  get isLastPage(): boolean {
+    return (this.page + 1) >= this.totalPages;
+  }
+
+  paginaAnterior() {
+    if (!this.isFirstPage) {
+      this.page--;
+      this.carregarEmprestimos();
+    }
+  }
+
+  proximaPagina() {
+    if (!this.isLastPage) {
+      this.page++;
+      this.carregarEmprestimos();
+    }
   }
 
   async realizarDevolucao(id:number){
@@ -77,8 +129,9 @@ export class EmprestimoList implements OnInit{
           this.ngOnInit();
         },
         error: (err) => {
-          const msg = err || "Não foi possível renovar!";
-          this.toastService.error(msg)
+          console.error(err);
+          const mensagemErro = err.error?.message || err.error || 'Erro ao renovar livro.';
+          this.toastService.error(mensagemErro)
         }
       });
     }

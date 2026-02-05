@@ -1,12 +1,23 @@
 <div class="page-container">
-    <h2>Listagem de Clientes</h2>
+    <div class="header-flex" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>Listagem de Clientes</h2>
+        <app-btn-primary label="Novo Cliente" icon="plus" route="/auth/cadastro"></app-btn-primary>
+    </div>
+
     <div style="margin: 2rem 0;">
         <app-search-input 
             placeholder="Buscar por nome ou email..." 
             (search)="filtrarClientes($event)">
         </app-search-input>
     </div>
+
     <div class="table-wrapper">
+        @if (isLoading) {
+            <div class="loading-overlay" style="position: absolute; inset:0; background: rgba(255,255,255,0.8); display: flex; justify-content: center; align-items: center; z-index: 10;">
+                <i class="ph ph-spinner ph-spin" style="font-size: 1.5rem; color: var(--primary);"></i> Carregando...
+            </div>
+        }
+
         <table>
             <thead>
                 <tr>
@@ -18,29 +29,52 @@
                 </tr>
             </thead>
             <tbody>
-                @for (cliente of clientesFiltrados; track cliente.usuNrId){
+                @for (cliente of clientes; track cliente.usuNrId){
                     <tr>
                         <td>{{cliente.usuNrId}}</td>
-                        <td>{{cliente.usuTxNome}}</td>
+                        <td><strong>{{cliente.usuTxNome}}</strong></td>
                         <td>{{cliente.usuTxEmail}}</td>
                         <td>
-                            <span class="badge" [class.admin]="cliente.usuTxPerfil === Perfil.ADMIN">{{cliente.usuTxPerfil}}</span>
+                            <span class="badge" [class.admin]="cliente.usuTxPerfil === Perfil.ADMIN">
+                                {{cliente.usuTxPerfil}}
+                            </span>
                         </td>
                         <td class="actions-cell">
-                            <button [routerLink]="['/app/clientes/editar', cliente.usuNrId]" class="btn-icon edit">
+                            <button [routerLink]="['/app/clientes/editar', cliente.usuNrId]" class="btn-icon edit" title="Editar">
                                 <i class="ph ph-pencil-simple-line"></i>
                             </button>
-                            <button (click)="deletarCliente(cliente.usuNrId!)" class="btn-icon delete">
+                            <button (click)="deletarCliente(cliente.usuNrId!)" class="btn-icon delete" title="Excluir">
                                 <i class="ph ph-trash"></i>
                             </button>
                         </td>
                     </tr>
                 } @empty {
-                    <tr>
-                        <td colspan="4" class="empty-state">Nenhum cliente encontrado</td>
-                    </tr>
+                    @if (!isLoading) {
+                        <tr>
+                            <td colspan="5" class="empty-state" style="text-align: center; padding: 2rem;">
+                                Nenhum cliente encontrado
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
     </div>
+
+    @if (totalElements > 0) {
+        <div class="pagination-container">
+            <button class="btn-nav" [disabled]="isFirstPage || isLoading" (click)="paginaAnterior()">
+                <i class="ph ph-caret-left"></i>
+            </button>
+
+            <div class="page-info">
+                <span class="current">Página {{ page + 1 }}</span>
+                <span class="total">de {{ totalPages }}</span>
+            </div>
+
+            <button class="btn-nav" [disabled]="isLastPage || isLoading" (click)="proximaPagina()">
+                <i class="ph ph-caret-right"></i>
+            </button>
+        </div>
+    }
 </div>

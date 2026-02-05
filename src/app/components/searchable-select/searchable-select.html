@@ -1,26 +1,52 @@
 <div class="form-group">
-    <label>{{ label }}</label>
+  <label>{{ label }}</label>
+  
+  <div class="input-wrapper select-wrapper" 
+       [class.error]="control.invalid && control.touched">
+    
+    <i class="ph ph-{{icon}} field-icon"></i>
 
-    <div class="input-wrapper select-wrapper"
-        [class.error]="control.invalid && control.touched"
-        [class.focused]="select.isOpen"
-    >
-        <i class="ph ph-{{icon}} field-icon"></i>
-        <ng-select
-            #select
-            class="custom-select"
-            [items]="items"
-            [bindLabel]="bindLabel"
-            [bindValue]="bindValue"
-            [placeholder]="placeholder"
-            [formControl]="control"
-            [notFoundText]="notFoundText"
-            [searchable]="true"
-            [clearable]="true"
-        >
-        </ng-select>
-    </div>
-    @if (control.invalid && control.touched) {
+    <ng-select 
+      class="custom-select"
+      [items]="items"
+      [bindLabel]="bindLabel"
+      [bindValue]="bindValue"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      [loading]="loading" 
+      [typeahead]="typeaheadInput$" 
+      [notFoundText]="notFoundText">
+
+      <ng-template ng-footer-tmp>
+        <div class="pagination-footer">
+          
+          <button 
+            type="button" 
+            class="btn-nav" 
+            [disabled]="isFirstPage" 
+            (click)="prevPage($event)">
+            <i class="ph ph-caret-left"></i>
+          </button>
+
+          <span class="page-info">
+             {{ page + 1 }} / {{ totalPages > 0 ? totalPages : 1 }}
+          </span>
+
+          <button 
+            type="button" 
+            class="btn-nav" 
+            [disabled]="isLastPage" 
+            (click)="nextPage($event)">
+            <i class="ph ph-caret-right"></i>
+          </button>
+
+        </div>
+      </ng-template>
+      </ng-select>
+
+  </div>
+  
+    @if (control.invalid && control.touched){
         <div class="error-msg">Este campo é obrigatório.</div>
     }
 </div>

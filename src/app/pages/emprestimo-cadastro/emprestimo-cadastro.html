@@ -34,6 +34,12 @@
         bindLabel="livTxTitulo"
         bindValue="livNrId"
         [control]="getControl('livro')"
+        [loading]="loadingLivros"
+        [page]="livroPage"
+        [pageSize]="livroSize"
+        [totalItems]="livroTotal"
+        (pageChange)="carregarLivros($event)" 
+        (search)="onSearchLivros($event)"
         notFoundText="Livro não disponível ou inexistente"
       >
       </app-searchable-select>

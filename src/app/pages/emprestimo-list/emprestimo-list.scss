@@ -1,4 +1,3 @@
-// Variáveis de Cores
 $primary: #007bff;
 $success: #28a745;
 $bg-light: #f8f9fa;
@@ -13,7 +12,6 @@ $text-muted: #6c757d;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-// --- Cabeçalho com Flexbox ---
 .header-flex {
   display: flex;
   justify-content: space-between;
@@ -44,7 +42,6 @@ $text-muted: #6c757d;
   }
 }
 
-// --- Wrapper da Tabela (O Card Branco) ---
 .table-wrapper {
   background: white;
   border-radius: 12px;
@@ -55,7 +52,6 @@ $text-muted: #6c757d;
   overflow-x: auto; 
 }
 
-// --- Estilização da Tabela ---
 table {
   width: 100%;
   border-collapse: collapse;
@@ -109,7 +105,6 @@ tbody {
   }
 }
 
-// --- Badges de Status ---
 .status-badge {
   display: inline-block;
   padding: 6px 12px;
@@ -133,7 +128,6 @@ tbody {
   }
 }
 
-// --- Botão de Devolver ---
 .btn-devolver {
   background-color: white;
   color: $success;
@@ -171,20 +165,20 @@ tbody {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px; /* Espaço entre Ícone e Texto */
+  gap: 8px;
   
-  padding: 8px 16px;       /* Tamanho confortável */
-  border-radius: 8px;      /* Bordas arredondadas */
+  padding: 8px 16px;     
+  border-radius: 8px;      
   border: none;
   font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;      /* Texto levemente menor para não poluir a tabela */
+  font-size: 0.85rem;     
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 
   &.primary {
-    background-color: #ecfdf5; // Fundo verde bem claro
-    color: #059669;            // Texto verde escuro
+    background-color: #ecfdf5; 
+    color: #059669;           
     
     &:hover {
       background-color: #d1fae5;
@@ -194,13 +188,76 @@ tbody {
   }
 
   &.secondary {
-    background-color: #fff7ed; // Fundo laranja bem claro
-    color: #c2410c;            // Texto laranja escuro
+    background-color: #fff7ed;
+    color: #c2410c;            
     
     &:hover {
       background-color: #ffedd5;
       color: #9a3412;
-      transform: translateY(-1px); // Efeito leve de "subir"
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.table-wrapper {
+  position: relative;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255,255,255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #4f46e5;
+  z-index: 10;
+  gap: 10px;
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+
+  .page-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.2;
+    .current { font-weight: 700; color: #1f2937; }
+    .total { font-size: 0.8rem; color: #9ca3af; }
+  }
+
+  .btn-nav {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background-color: #f3f4f6;
+    color: #4b5563;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover:not(:disabled) {
+      background-color: #4f46e5;
+      color: white;
+    }
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 }

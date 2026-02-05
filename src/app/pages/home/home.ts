@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth';
-import { HttpClient } from '@angular/common/http';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { LivroService } from '../../services/livro.service';
 import { Livro } from '../../models/livro.interface';
 import { DashboardDTO } from '../../models/dashboardDTO';
@@ -18,7 +17,7 @@ import { BtnPrimary } from '../../components/btn-primary/btn-primary';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   protected authService = inject(AuthService);
   private livroService = inject(LivroService);
   private dashboardService = inject(DashboardService);
@@ -26,16 +25,20 @@ export class HomeComponent implements OnInit{
   private toastService = inject(ToastService);
 
   isAdmin = false;
+  dashboardData: DashboardDTO | null = null;
 
   livros: Livro[] = [];
-  livrosFiltrados: Livro[] = [];
-
-  dashboardData: DashboardDTO | null = null;
+  page = 0;
+  size = 8;
+  searchQuery = '';
+  totalElements = 0;
+  isLoading = false;
   
-  ngOnInit(){
-      this.isAdmin = this.authService.isAdmin();
-      this.carregarLivros();
-      if (this.authService.isAdmin()) {
+  ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
+    this.carregarLivros();
+
+    if (this.authService.isAdmin()) {
       this.dashboardService.getDashboard().subscribe({
         next: (dados) => this.dashboardData = dados,
         error: (e) => console.error('Erro dashboard', e)
@@ -43,49 +46,70 @@ export class HomeComponent implements OnInit{
     }
   }
 
-  carregarLivros(){
-    this.livroService.listar().subscribe({
+  carregarLivros() {
+    this.isLoading = true;
+
+    this.livroService.listar(this.page, this.size, this.searchQuery).subscribe({
       next: (dados) => {
-        this.livros = dados;
-        this.livrosFiltrados = dados;
-        console.log('Livros carregados com sucesso: ', dados);
+        this.livros = dados.content;
+        this.totalElements = dados.totalElements;
+        this.isLoading = false;
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
       },
-      error : (err) => {
-        console.log("Erro ao carregar livros: ",err);
+      error: (err) => {
+        console.error("Erro ao carregar livros: ", err);
+        this.isLoading = false;
       }
-    })
+    });
   }
 
-  async deletarLivro(id:number){
+  filtrarLivros(texto: string) {
+    this.searchQuery = texto;
+    this.page = 0;
+    this.carregarLivros();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalElements / this.size);
+  }
+
+  get isFirstPage(): boolean {
+    return this.page === 0;
+  }
+
+  get isLastPage(): boolean {
+    return (this.page + 1) >= this.totalPages;
+  }
+
+  paginaAnterior() {
+    if (!this.isFirstPage) {
+      this.page--;
+      this.carregarLivros();
+    }
+  }
+
+  proximaPagina() {
+    if (!this.isLastPage) {
+      this.page++;
+      this.carregarLivros();
+    }
+  }
+
+  async deletarLivro(id: number) {
     const confirmou = await this.alertService.confirm(
       'Excluir Livro', 
       'Tem certeza que deseja remover este livro permanentemente?',
       'danger' 
     );
-    if(confirmou){
+
+    if (confirmou) {
       this.livroService.deletar(id).subscribe({
         next: () => {
-          this.livros = this.livros.filter(l => l.livNrId !== id);
-          this.livrosFiltrados = this.livrosFiltrados.filter(l => l.livNrId !== id);
           this.toastService.sucess("Livro removido!");
+          this.carregarLivros(); 
         },
         error: () => this.toastService.error("Erro ao remover livro.") 
       });
     }
-  }
-
-  filtrarLivros(texto: string){
-    if(!texto){
-      this.livrosFiltrados = this.livros;
-      return;
-    }
-
-    const termo = texto.toLowerCase().trim();
-
-    this.livrosFiltrados = this.livros.filter(livro => 
-      livro.livTxTitulo.toLowerCase().includes(termo) ||
-      livro.livTxAutor.toLowerCase().includes(termo) ||
-      livro.livTxIsbn.includes(termo)
-    )
   }
 }

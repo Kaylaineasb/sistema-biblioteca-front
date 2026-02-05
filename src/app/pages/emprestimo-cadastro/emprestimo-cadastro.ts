@@ -29,6 +29,11 @@ export class EmprestimoCadastroComponent implements OnInit {
   private toastService = inject(ToastService);
 
   livros: Livro[] = [];
+  livroPage = 0;
+  livroSize = 5;
+  livroTotal = 0;
+  livroTermo = '';
+  loadingLivros = false;
   usuarios: Usuario[] = [];
 
   formEmprestimo: FormGroup = this.fb.group({
@@ -37,25 +42,39 @@ export class EmprestimoCadastroComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.carregarDados();
+    this.carregarLivros();
   }
 
   getControl(name: string): FormControl {
     return this.formEmprestimo.get(name) as FormControl;
   }
 
-  carregarDados(){
-    this.livroService.listar().subscribe({
-      next: (dado) => {
-        this.livros = dado.filter(livro => livro.disponivel ===  true);
-      },
-      error: (e) => console.error("Erro ao buscar livros ", e)
-    });
+  carregarLivros(page: number = 0) {
+    this.livroPage = page;
+    this.loadingLivros = true;
 
-    this.usuarioService.listar().subscribe({
-      next: (dado) =>  this.usuarios = dado,
-      error: (e) => console.error("Erro ao buscar usuários ", e)
-    });
+    this.livroService.listar(this.livroPage, this.livroSize, this.livroTermo)
+      .subscribe({
+        next: (response) => {
+          this.livros = response.content; 
+          this.livroTotal = response.totalElements;
+          
+          this.loadingLivros = false;
+        },
+        error: () => this.loadingLivros = false
+      });
+  }
+
+  onSearchLivros(termo: string) {
+    this.livroTermo = termo;
+    this.carregarLivros(0);
+  }
+
+  onScrollLivros() {
+    if (this.livros.length < this.livroTotal) {
+      this.livroPage++;
+      this.carregarLivros(0);
+    }
   }
 
   onSubmit(){

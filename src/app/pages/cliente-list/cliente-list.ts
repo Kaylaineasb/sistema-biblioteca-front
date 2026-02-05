@@ -6,10 +6,11 @@ import { RouterLink } from '@angular/router';
 import { CustomAlertService } from '../../services/custom-alert.service';
 import { ToastService } from '../../services/toast.service';
 import { SearchInput } from '../../components/search-input/search-input';
+import { BtnPrimary } from '../../components/btn-primary/btn-primary';
 
 @Component({
   selector: 'app-cliente-list',
-  imports: [CommonModule, RouterLink, SearchInput],
+  imports: [CommonModule, RouterLink, SearchInput, BtnPrimary],
   templateUrl: './cliente-list.html',
   styleUrl: './cliente-list.scss',
 })
@@ -20,22 +21,68 @@ export class ClienteList implements OnInit{
   protected readonly Perfil = Perfil;
 
   clientes: Usuario[] = [];
-  clientesFiltrados: Usuario[] = [];
+  page = 0;
+  size = 10;
+  totalElements = 0;
+  searchQuery = '';
+  isLoading = false;
 
   ngOnInit(): void {
     this.carregarClientes();
   }
 
-  carregarClientes(){
-    this.usuarioService.listar().subscribe({
+  carregarClientes() {
+    this.isLoading = true;
+
+    this.usuarioService.listar(this.page, this.size, this.searchQuery).subscribe({
       next: (dados) => {
-        this.clientes = dados;
-        this.clientesFiltrados = dados;
+        if (dados.content) {
+          this.clientes = dados.content;
+          this.totalElements = dados.totalElements;
+        } else {
+          this.clientes = dados;
+          this.totalElements = dados.length;
+        }
+        this.isLoading = false;
       },
       error: (erro) => {
         console.error('Erro ao listar clientes ', erro);
+        this.toastService.error('Erro ao carregar clientes.');
+        this.isLoading = false;
       }
-    })
+    });
+  }
+
+  filtrarClientes(texto: string) {
+    this.searchQuery = texto;
+    this.page = 0;
+    this.carregarClientes();
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalElements / this.size);
+  }
+
+  get isFirstPage(): boolean {
+    return this.page === 0;
+  }
+
+  get isLastPage(): boolean {
+    return (this.page + 1) >= this.totalPages;
+  }
+
+  paginaAnterior() {
+    if (!this.isFirstPage) {
+      this.page--;
+      this.carregarClientes();
+    }
+  }
+
+  proximaPagina() {
+    if (!this.isLastPage) {
+      this.page++;
+      this.carregarClientes();
+    }
   }
 
   async deletarCliente(id: number){
@@ -55,19 +102,5 @@ export class ClienteList implements OnInit{
         }
       });
     }
-  }
-
-  filtrarClientes(texto: string){
-    if(!texto){
-      this.clientesFiltrados = this.clientes;
-      return;
-    }
-
-    const termo = texto.toLowerCase();
-
-    this.clientesFiltrados = this.clientes.filter(cliente => 
-      cliente.usuTxNome.toLowerCase().includes(termo) ||
-      cliente.usuTxEmail.toLowerCase().includes(termo)
-    );
   }
 }

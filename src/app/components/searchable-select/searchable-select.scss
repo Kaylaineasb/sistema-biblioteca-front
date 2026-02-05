@@ -114,3 +114,50 @@ label {
     }
   }
 }
+
+.pagination-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  gap: 12px;
+  cursor: default;
+
+  .page-info {
+    font-size: 0.85rem;
+    color: #4b5563;
+    font-weight: 600;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  .btn-nav {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    color: #374151;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    i { font-size: 1rem; }
+
+    &:hover:not(:disabled) {
+      background-color: #eff6ff;
+      border-color: #3b82f6; // Azul
+      color: #3b82f6;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #f3f4f6;
+    }
+  }
+}

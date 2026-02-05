@@ -19,11 +19,60 @@ export class MeusEmprestimosComponent implements OnInit{
 
   meusEmprestimos: Emprestimo[] = [];
 
+  page = 0;
+  size = 6;
+  totalElements = 0;
+  isLoading = false;
+
   ngOnInit() {
-    this.emprestimoService.listarMeusEmprestimos().subscribe({
-      next: (dados) => this.meusEmprestimos = dados,
-      error: (erro) => console.error("Erro ao buscar meus empréstimos ", erro)
+    this.carregarDados();
+  }
+
+  carregarDados() {
+    this.isLoading = true;
+    
+    this.emprestimoService.listarMeusEmprestimos(this.page, this.size).subscribe({
+      next: (dados) => {
+        if (dados.content) {
+          this.meusEmprestimos = dados.content;
+          this.totalElements = dados.totalElements;
+        } else if (Array.isArray(dados)) {
+          this.meusEmprestimos = dados;
+          this.totalElements = dados.length;
+        }
+        this.isLoading = false;
+      },
+      error: (erro) => {
+        console.error("Erro ao buscar meus empréstimos ", erro);
+        this.isLoading = false;
+      }
     });
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalElements / this.size);
+  }
+
+  get isFirstPage(): boolean {
+    return this.page === 0;
+  }
+
+  get isLastPage(): boolean {
+    return (this.page + 1) >= this.totalPages;
+  }
+
+  paginaAnterior() {
+    if (!this.isFirstPage) {
+      this.page--;
+      this.carregarDados();
+    }
+  }
+
+  proximaPagina() {
+    if (!this.isLastPage) {
+      this.page++;
+      this.carregarDados();
+    }
   }
 
   async renovarLivro(id: number){

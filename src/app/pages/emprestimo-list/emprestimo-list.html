@@ -1,14 +1,21 @@
 <div class="page-container">
+  
   <div class="header-flex">
-      <h2>Controle de Empréstimos</h2>
-      <app-btn-primary 
-        label="Novo Empréstimo" 
-        icon="plus" 
-        route="/app/emprestimos/novo">
-      </app-btn-primary>
+    <h2>Controle de Empréstimos</h2>
+    <app-btn-primary 
+      label="Novo Empréstimo" 
+      icon="plus" 
+      route="/app/emprestimos/novo">
+    </app-btn-primary>
   </div>
 
   <div class="table-wrapper">
+    @if (isLoading) {
+      <div class="loading-overlay">
+        <i class="ph ph-spinner ph-spin"></i> Carregando...
+      </div>
+    }
+
     <table>
       <thead>
         <tr>
@@ -30,7 +37,9 @@
             
             <td>{{ emp.empDtEmprestimo | date:'dd/MM/yyyy' }}</td>
             
-            <td>{{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}</td>
+            <td [class.text-danger]="estaAtrasado(emp)">
+               {{ emp.empDtDevolucaoPrevista | date:'dd/MM/yyyy' }}
+            </td>
             
             <td>
               <span 
@@ -49,22 +58,48 @@
                   title="Confirmar Devolução"
                   (click)="realizarDevolucao(emp.empNrId!)">
                   <i class="ph ph-check-circle"></i>
-                  <span>Devolver</span>
                 </button>
                 <button 
                   class="btn-icon secondary" 
                   title="Renovar prazo (+7 dias)"
                   (click)="renovarLivro(emp.empNrId!)">
                   <i class="ph ph-clock-clockwise"></i>
-                  <span>Renovar</span>
                 </button>
               }
             </td>
           </tr>
         } @empty {
-            <tr><td colspan="6" class="text-center">Nenhum empréstimo ativo.</td></tr>
+          @if(!isLoading) {
+             <tr><td colspan="7" class="text-center">Nenhum empréstimo encontrado.</td></tr>
+          }
         }
       </tbody>
     </table>
   </div>
+
+  @if (totalElements > 0) {
+    <div class="pagination-container">
+      
+      <button 
+        class="btn-nav" 
+        [disabled]="isFirstPage || isLoading" 
+        (click)="paginaAnterior()">
+        <i class="ph ph-caret-left"></i>
+      </button>
+
+      <div class="page-info">
+        <span class="current">Página {{ page + 1 }}</span>
+        <span class="total">de {{ totalPages }}</span>
+      </div>
+
+      <button 
+        class="btn-nav" 
+        [disabled]="isLastPage || isLoading" 
+        (click)="proximaPagina()">
+        <i class="ph ph-caret-right"></i>
+      </button>
+
+    </div>
+  }
+
 </div>

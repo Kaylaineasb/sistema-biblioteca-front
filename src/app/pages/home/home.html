@@ -1,109 +1,85 @@
 <div class="home-container">
+  
   <header class="page-header">
     <div class="header-content">
-    <h1>Acervo Disponível</h1>
-    @if (isAdmin) {
-      <p class="subtitle">Painel de gestão e controle de acervo.</p>
-    } @else {
-      <p class="subtitle">Encontre sua próxima leitura favorita em nossa coleção.</p>
-    }
-  </div>
-
-  @if (isAdmin) {
-    <div class="header-actions">
-      <app-btn-primary 
-        label="Novo Livro" 
-        icon="plus" 
-        route="/app/livros/novo">
-      </app-btn-primary>
+      <h1>Acervo Disponível</h1>
+      @if (isAdmin) {
+        <p class="subtitle">Painel de gestão e controle de acervo.</p>
+      } @else {
+        <p class="subtitle">Encontre sua próxima leitura favorita em nossa coleção.</p>
+      }
     </div>
-  }
+
+    @if (isAdmin) {
+      <div class="header-actions">
+        <app-btn-primary label="Novo Livro" icon="plus" route="/app/livros/novo"></app-btn-primary>
+      </div>
+    }
   </header>
+
   @if (dashboardData) {
     <div class="dashboard-grid">
-      
       <div class="kpi-card blue">
-        <div class="icon-wrapper">
-          <i class="ph ph-books"></i>
-        </div>
+        <div class="icon-wrapper"><i class="ph ph-books"></i></div>
         <div class="kpi-info">
           <h3>{{ dashboardData.totalLivros }}</h3>
           <p>Livros no Acervo</p>
         </div>
       </div>
-
       <div class="kpi-card green">
-        <div class="icon-wrapper">
-          <i class="ph ph-users"></i>
-        </div>
+        <div class="icon-wrapper"><i class="ph ph-users"></i></div>
         <div class="kpi-info">
           <h3>{{ dashboardData.totalLeitores }}</h3>
           <p>Leitores Cadastrados</p>
         </div>
       </div>
-
       <div class="kpi-card orange">
-        <div class="icon-wrapper">
-          <i class="ph ph-arrows-left-right"></i>
-        </div>
+        <div class="icon-wrapper"><i class="ph ph-arrows-left-right"></i></div>
         <div class="kpi-info">
           <h3>{{ dashboardData.emprestimosAtivos }}</h3>
           <p>Empréstimos Ativos</p>
         </div>
       </div>
-
       <div class="kpi-card red">
-        <div class="icon-wrapper">
-          <i class="ph ph-warning-circle"></i>
-        </div>
+        <div class="icon-wrapper"><i class="ph ph-warning-circle"></i></div>
         <div class="kpi-info">
           <h3>{{ dashboardData.emprestimosAtrasados }}</h3>
           <p>Em Atraso</p>
         </div>
       </div>
-
     </div>
   }
+
   <div style="margin-bottom: 3rem;">
     <app-search-input 
       placeholder="Pesquisar por título, autor ou ISBN..."
-      (search)="filtrarLivros($event)"></app-search-input>
+      (search)="filtrarLivros($event)">
+    </app-search-input>
   </div>
+
   <main class="books-grid">
-    @if(livros.length > 0){
-      @for (livro of livrosFiltrados; track livro.livNrId) {
+    
+    @if(livros.length > 0) {
+      @for (livro of livros; track livro.livNrId) {
+        
         <div class="book-card" [class.unavailable]="!livro.disponivel">
-          
           <div class="book-cover">
             <div class="status-pill" [class.available]="livro.disponivel">
-              @if(livro.disponivel) {
-                <i class="ph ph-check-circle"></i> Disponível
-              } @else {
-                <i class="ph ph-lock-key"></i> Indisponível
-              }
+              @if(livro.disponivel) { <i class="ph ph-check-circle"></i> Disponível } 
+              @else { <i class="ph ph-lock-key"></i> Indisponível }
             </div>
-
-            <div class="cover-art">
-              <i class="ph ph-book-open-text"></i>
-            </div>
+            <div class="cover-art"><i class="ph ph-book-open-text"></i></div>
           </div>
 
           <div class="book-content">
             <div class="info">
               <h3 class="book-title" title="{{livro.livTxTitulo}}">{{livro.livTxTitulo}}</h3>
-              <p class="book-author">
-                <span class="label">Autor:</span> {{livro.livTxAutor}}
-              </p>
+              <p class="book-author"><span class="label">Autor:</span> {{livro.livTxAutor}}</p>
             </div>
-
             <div class="book-meta">
-              <div class="meta-item">
-                <i class="ph ph-barcode"></i> {{livro.livTxIsbn}}
-              </div>
+              <div class="meta-item"><i class="ph ph-barcode"></i> {{livro.livTxIsbn}}</div>
               @if (livro.livDtPublicacao){
-                <div class="meta-item">
-                  <i class="ph ph-calendar-blank"></i> {{ livro.livDtPublicacao | date:'yyyy' }}
-                </div>
+                <div class="meta-item"><i class="ph ph-calendar-blank"></i> {{ livro.livDtPublicacao | date:'yyyy' }}</div>
               }
             </div>
 
@@ -112,22 +88,58 @@
                 <button [routerLink]="['/app/livros/editar', livro.livNrId]" class="btn-action edit" title="Editar">
                   <i class="ph ph-pencil-simple"></i> Editar
                 </button>
-                
                 <button (click)="deletarLivro(livro.livNrId!)" class="btn-action delete" title="Excluir">
                   <i class="ph ph-trash"></i> Excluir
                 </button>
               </div>
             }
           </div>
-
         </div>
+
       }
-    } @else {
+    } 
+    
+    @else if (!isLoading) {
       <div class="empty-state">
         <div class="empty-icon">📭</div>
         <h3>Nenhum livro encontrado</h3>
         <p>Tente buscar por outro termo ou adicione um novo livro.</p>
       </div>
     }
+
   </main>
+
+  @if (totalElements > 0) {
+    <div class="pagination-container">
+      
+      <button 
+        class="btn-nav" 
+        [disabled]="isFirstPage || isLoading" 
+        (click)="paginaAnterior()">
+        <i class="ph ph-caret-left"></i>
+      </button>
+
+      <div class="page-info">
+        <span class="current">Página {{ page + 1 }}</span>
+        <span class="total">de {{ totalPages }}</span>
+      </div>
+
+      <button 
+        class="btn-nav" 
+        [disabled]="isLastPage || isLoading" 
+        (click)="proximaPagina()">
+        <i class="ph ph-caret-right"></i>
+      </button>
+
+    </div>
+  }
+
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="spinner">
+        <i class="ph ph-spinner ph-spin"></i>
+      </div>
+    </div>
+  }
+
 </div>

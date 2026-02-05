@@ -57,4 +57,20 @@
       </div>
     }
   </div>
+  @if (totalElements > 0) {
+      <div class="pagination-container">
+        <button class="btn-nav" [disabled]="isFirstPage || isLoading" (click)="paginaAnterior()">
+          <i class="ph ph-caret-left"></i>
+        </button>
+
+        <div class="page-info">
+          <span class="current">Página {{ page + 1 }}</span>
+          <span class="total">de {{ totalPages }}</span>
+        </div>
+
+        <button class="btn-nav" [disabled]="isLastPage || isLoading" (click)="proximaPagina()">
+          <i class="ph ph-caret-right"></i>
+        </button>
+      </div>
+    }
 </div>
