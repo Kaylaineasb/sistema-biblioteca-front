@@ -43,6 +43,7 @@ export class EmprestimoCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.carregarLivros();
+    this.carregarUsuarios();
   }
 
   getControl(name: string): FormControl {
@@ -63,6 +64,19 @@ export class EmprestimoCadastroComponent implements OnInit {
         },
         error: () => this.loadingLivros = false
       });
+  }
+
+  carregarUsuarios() {
+    this.usuarioService.listar(0, 100).subscribe({ 
+      next: (dados) => {
+        if (dados.content) {
+          this.usuarios = dados.content;
+        } else {
+          this.usuarios = dados;
+        }
+      },
+      error: (err) => console.error("Erro ao carregar usuários", err)
+    });
   }
 
   onSearchLivros(termo: string) {
